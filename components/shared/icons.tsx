@@ -10,6 +10,7 @@ import {
   CreditCard,
   File,
   FileText,
+  Handshake,
   HelpCircle,
   Home,
   Image,
@@ -115,6 +116,7 @@ export const Icons = {
   spinner: Loader2,
   sun: SunMedium,
   trash: Trash,
+  handshake: Handshake,
   twitter: ({ ...props }: LucideProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"

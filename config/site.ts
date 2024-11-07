@@ -4,14 +4,14 @@ import { env } from "@/env.mjs";
 const site_url = env.NEXT_PUBLIC_APP_URL;
 
 export const siteConfig: SiteConfig = {
-  name: "SaaS Starter",
+  name: "Trust NV | Estate planning made simple",
   description:
-    "Get your project off to an explosive start with SaaS Starter! Harness the power of Next.js 14, Prisma, Neon, Auth.js v5, Resend, React Email, Shadcn/ui and Stripe to build your next big thing.",
+    "Streamlines the process, allowing professionals to manage client needs effortlessly and efficiently.",
   url: site_url,
   ogImage: `${site_url}/_static/og.jpg`,
   links: {
-    twitter: "https://twitter.com/miickasmt",
-    github: "https://github.com/mickasmt/next-saas-stripe-starter",
+    twitter: "https://twitter.com/trustnv",
+    github: "",
   },
   mailSupport: "support@saas-starter.com",
 };

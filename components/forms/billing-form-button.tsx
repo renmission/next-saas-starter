@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import React, { useTransition } from "react";
 import { generateUserStripe } from "@/actions/generate-user-stripe";
 import { SubscriptionPlan, UserSubscriptionPlan } from "@/types";
 

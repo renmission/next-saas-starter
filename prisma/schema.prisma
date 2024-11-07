@@ -12,7 +12,55 @@ datasource db {
 
 enum UserRole {
   ADMIN
-  USER
+  PROFESSIONAL
+  CLIENT
+}
+
+enum TrustType {
+  NEVADA_ASSET_PROTECTION_TRUST
+  NEVADA_DYNASTY_TRUST
+}
+
+model Business {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  users    User[]
+  trusts   Trust[]
+
+  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
+  stripePriceId          String?   @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
+
+  @@map(name: "businesses")
+}
+
+model Trust {
+  id String @id @default(cuid())
+  name String
+  type TrustType
+  status String
+  documents Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  businessId     String
+  business       Business     @relation(fields: [businessId], references: [id])
+
+  
+  clientId       String
+  client         User         @relation("TrustClient", fields: [clientId], references: [id])
+  
+  professionalId String
+  professional   User         @relation("TrustCreator", fields: [professionalId], references: [id])
+
+  @@index([businessId])
+  @@index([clientId])
+  @@index([professionalId])
+  @@map(name: "trusts")
 }
 
 model Account {
@@ -57,7 +105,15 @@ model User {
   image         String?
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
-  role          UserRole  @default(USER)
+  role          UserRole  @default(PROFESSIONAL)
+
+  businessid    String?
+  business      Business? @relation(fields: [businessid], references: [id])
+
+  // Professional-specific relations
+  managedTrusts  Trust[]  @relation("TrustCreator")
+  // Client-specific relations
+  clientTrusts   Trust[]  @relation("TrustClient")
 
   accounts Account[]
   sessions Session[]

@@ -1,4 +1,7 @@
+import React from "react";
+
 import { infos } from "@/config/landing";
+import { PricingFaq } from "@/components/pricing/pricing-faq";
 import BentoGrid from "@/components/sections/bentogrid";
 import Features from "@/components/sections/features";
 import HeroLanding from "@/components/sections/hero-landing";
@@ -12,12 +15,13 @@ export default function IndexPage() {
     <>
       <HeroLanding />
       <PreviewLanding />
-      <Powered />
+      {/* <Powered /> */}
       <BentoGrid />
       <InfoLanding data={infos[0]} reverse={true} />
-      {/* <InfoLanding data={infos[1]} /> */}
-      <Features />
-      <Testimonials />
+      <InfoLanding data={infos[1]} />
+      {/* <Features /> */}
+      {/* <Testimonials /> */}
+      <PricingFaq />
     </>
   );
 }

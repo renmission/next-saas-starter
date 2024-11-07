@@ -2,50 +2,53 @@ import { FeatureLdg, InfoLdg, TestimonialType } from "types";
 
 export const infos: InfoLdg[] = [
   {
-    title: "Empower your projects",
+    title: "Maximize Wealth with Nevada Dynasty Trust",
     description:
-      "Unlock the full potential of your projects with our open-source SaaS platform. Collaborate seamlessly, innovate effortlessly, and scale limitlessly.",
-    image: "/_static/illustrations/work-from-home.jpg",
+      "Learn how this trust preserves wealth across generations, minimizes taxes, and offers control. Easily set up and manage for peace of mind and security.",
+    image: "/_static/illustrations/trust-1.svg",
     list: [
       {
-        title: "Collaborative",
-        description: "Work together with your team members in real-time.",
+        title: "Asset Protection",
+        description:
+          "Safeguard assets from creditors and legal claims, ensuring wealth preservation for future generations.",
         icon: "laptop",
       },
       {
-        title: "Innovative",
-        description: "Stay ahead of the curve with access constant updates.",
+        title: "Tax Efficiency",
+        description:
+          "Minimize estate and gift taxes, allowing wealth transfer without substantial tax liabilities.",
         icon: "settings",
       },
       {
-        title: "Scalable",
+        title: "Perpetual Duration",
         description:
-          "Our platform offers the scalability needed to adapt to your needs.",
+          "Maintain control over assets for up to 365 years, ensuring long-term wealth management across generations.",
         icon: "search",
       },
     ],
   },
   {
-    title: "Seamless Integration",
+    title: "Secure Your Assets with Nevada Asset Protection Trust",
     description:
-      "Integrate our open-source SaaS seamlessly into your existing workflows. Effortlessly connect with your favorite tools and services for a streamlined experience.",
-    image: "/_static/illustrations/work-from-home.jpg",
+      "Discover the benefits of the Nevada Asset Protection Trust and how it can safeguard your assets. Our platform provides a seamless process for creating and managing your trust.",
+    image: "/_static/illustrations/trust-2.svg",
     list: [
       {
-        title: "Flexible",
+        title: "Robust Asset Protection",
         description:
-          "Customize your integrations to fit your unique requirements.",
+          "These trusts offer strong legal protections, shielding assets from creditors and legal claims, with a short statute of limitations for challenges.",
         icon: "laptop",
       },
       {
-        title: "Efficient",
-        description: "Streamline your processes and reducing manual effort.",
+        title: "Tax Advantages",
+        description:
+          "Reduce estate and gift taxes, allowing high-net-worth individuals to transfer more wealth to beneficiaries.",
         icon: "search",
       },
       {
-        title: "Reliable",
+        title: "Flexibility and Control",
         description:
-          "Rely on our robust infrastructure and comprehensive documentation.",
+          "Grantors can change beneficiaries and manage investments, making these trusts a versatile estate planning tool.",
         icon: "settings",
       },
     ],

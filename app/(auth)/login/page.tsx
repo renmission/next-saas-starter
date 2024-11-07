@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 import { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import logo from "@/public/_static/favicons/apple-touch-icon.png";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -29,7 +31,12 @@ export default function LoginPage() {
       </Link>
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col space-y-2 text-center">
-          <Icons.logo className="mx-auto size-6" />
+          <Image
+            src={logo}
+            alt="Trust NV Logo"
+            width={60}
+            className="mx-auto"
+          />
           <h1 className="text-2xl font-semibold tracking-tight">
             Welcome back
           </h1>

@@ -6,6 +6,8 @@ import { prisma } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
 
 export async function POST(req: Request) {
+  console.log("🔔 Webhook received!");
+
   const body = await req.text();
   const signature = headers().get("Stripe-Signature") as string;
 
@@ -17,6 +19,8 @@ export async function POST(req: Request) {
       signature,
       env.STRIPE_WEBHOOK_SECRET,
     );
+
+    console.log("🔔 EVENT", event);
   } catch (error) {
     return new Response(`Webhook Error: ${error.message}`, { status: 400 });
   }
@@ -24,10 +28,14 @@ export async function POST(req: Request) {
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
 
+    console.log("🔔 SESSION", session);
+
     // Retrieve the subscription details from Stripe.
     const subscription = await stripe.subscriptions.retrieve(
       session.subscription as string,
     );
+
+    console.log("🔔 SUBSCRIPTION - SESSION COMPLETED", subscription);
 
     // Update the user stripe into in our database.
     // Since this is the initial subscription, we need to update

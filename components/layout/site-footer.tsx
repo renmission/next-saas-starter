@@ -42,44 +42,18 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             Copyright &copy; 2024. All rights reserved.
           </span> */}
           <p className="text-left text-sm text-muted-foreground">
-            Built by{" "}
+            &copy; Copyright {new Date().getFullYear()} -{" "}
             <Link
               href={siteConfig.links.twitter}
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
             >
-              mickasmt
-            </Link>
-            . Hosted on{" "}
-            <Link
-              href="https://vercel.com"
-              target="_blank"
-              rel="noreferrer"
-              className="font-medium underline underline-offset-4"
-            >
-              Vercel
-            </Link>
-            . Illustrations by{" "}
-            <Link
-              href="https://popsy.co"
-              target="_blank"
-              rel="noreferrer"
-              className="font-medium underline underline-offset-4"
-            >
-              Popsy
+              Trust NV
             </Link>
           </p>
 
           <div className="flex items-center gap-3">
-            <Link
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noreferrer"
-              className="font-medium underline underline-offset-4"
-            >
-              <Icons.gitHub className="size-5" />
-            </Link>
             <ModeToggle />
           </div>
         </div>
