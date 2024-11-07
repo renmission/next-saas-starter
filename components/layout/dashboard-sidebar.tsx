@@ -1,8 +1,10 @@
 "use client";
 
 import { Fragment, useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import logo from "@/public/logo.png";
 import { NavItem, SidebarNavItem } from "@/types";
 import { Menu, PanelLeftClose, PanelRightClose } from "lucide-react";
 
@@ -19,7 +21,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import ProjectSwitcher from "@/components/dashboard/practice-switcher";
+// import ProjectSwitcher from "@/components/dashboard/practice-switcher";
 // import { UpgradeCard } from "@/components/dashboard/upgrade-card";
 import { Icons } from "@/components/shared/icons";
 
@@ -72,7 +74,24 @@ export function DashboardSidebar({ links }: DashboardSidebarProps) {
           >
             <div className="flex h-full max-h-screen flex-1 flex-col gap-2">
               <div className="flex h-14 items-center p-4 lg:h-[60px]">
-                {isSidebarExpanded ? <ProjectSwitcher /> : null}
+                <Link
+                  href="/dashboard"
+                  className={cn(
+                    "flex items-center space-x-1.5",
+                    !isSidebarExpanded && "md:hidden",
+                  )}
+                >
+                  {isSidebarExpanded ? (
+                    <Image src={logo} alt="Trust NV Logo" width={150} />
+                  ) : (
+                    <Image
+                      src={logo}
+                      alt="Trust NV Logo"
+                      width={40}
+                      height={40}
+                    />
+                  )}
+                </Link>
 
                 <Button
                   variant="ghost"
@@ -166,10 +185,6 @@ export function DashboardSidebar({ links }: DashboardSidebarProps) {
                   </section>
                 ))}
               </nav>
-
-              {/* <div className="mt-auto xl:p-4">
-                {isSidebarExpanded ? <UpgradeCard /> : null}
-              </div> */}
             </div>
           </aside>
         </ScrollArea>
@@ -201,16 +216,11 @@ export function MobileSheetSidebar({ links }: DashboardSidebarProps) {
             <div className="flex h-screen flex-col">
               <nav className="flex flex-1 flex-col gap-y-8 p-6 text-lg font-medium">
                 <Link
-                  href="#"
-                  className="flex items-center gap-2 text-lg font-semibold"
+                  href="/dashboard"
+                  className="flex items-center space-x-1.5"
                 >
-                  <Icons.logo className="size-6" />
-                  <span className="font-urban text-xl font-bold">
-                    {siteConfig.name}
-                  </span>
+                  <Image src={logo} alt="Trust NV Logo" width={150} />
                 </Link>
-
-                <ProjectSwitcher large />
 
                 {links.map((section) => (
                   <section
@@ -255,10 +265,6 @@ export function MobileSheetSidebar({ links }: DashboardSidebarProps) {
                     })}
                   </section>
                 ))}
-
-                {/* <div className="mt-auto">
-                  <UpgradeCard />
-                </div> */}
               </nav>
             </div>
           </ScrollArea>

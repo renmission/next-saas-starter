@@ -8,6 +8,7 @@ import { CreateNewBusinessTransactionSection } from "@/components/dashboard/crea
 import DashboardDataCard from "@/components/dashboard/data-card";
 import { DashboardHeader } from "@/components/dashboard/header";
 import InfoCard from "@/components/dashboard/info-card";
+import { TransactionsTable } from "@/components/dashboard/transaction-table";
 import TransactionsList from "@/components/dashboard/transactions-list";
 import { Icons } from "@/components/shared/icons";
 
@@ -28,7 +29,7 @@ export default async function BusinessPage() {
         <CreateNewBusinessTransactionSection />
       </div>
       <div className="flex flex-col gap-5">
-        <TransactionsList />
+        <TransactionsTable />
       </div>
     </>
   );
