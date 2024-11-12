@@ -17,7 +17,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DataTable } from "@/components/shared/data-tables";
+import { Icons } from "@/components/shared/icons";
 
+import { useDeleteClientModal } from "../modals/business/delete-client-modal";
 import { Badge } from "../ui/badge";
 
 // This type should match your data structure
@@ -27,6 +29,55 @@ type Client = {
   status: string;
   priority: string;
   createdAt: string | number | Date;
+};
+
+const ActionsCell = ({ client }: { client: Client }) => {
+  const { DeleteClientModal, setShowDeleteClientModal, setClientToDelete } =
+    useDeleteClientModal();
+
+  return (
+    <>
+      <DeleteClientModal />
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem
+            onClick={() => navigator.clipboard.writeText(client.id)}
+          >
+            Copy client ID
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem asChild>
+            <Link href={`/dashboard/business/clients/${client.id}`}>
+              View client
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href={`/dashboard/business/clients/${client.id}/payment`}>
+              View payment details
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={() => {
+              setClientToDelete({ id: client.id, name: client.name });
+              setShowDeleteClientModal(true);
+            }}
+            className="text-red-600 focus:text-red-600"
+          >
+            <Icons.trash className="mr-2 h-4 w-4" />
+            Delete Client
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
+  );
 };
 
 const columns: ColumnDef<Client>[] = [
@@ -160,36 +211,7 @@ const columns: ColumnDef<Client>[] = [
     id: "actions",
     cell: ({ row }) => {
       const client = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(client.id)}
-            >
-              Copy client ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link href={`/dashboard/business/clients/${client.id}`}>
-                View client
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Link href={`/dashboard/business/clients/${client.id}/payment`}>
-                View payment details
-              </Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      return <ActionsCell client={client} />;
     },
   },
 ];

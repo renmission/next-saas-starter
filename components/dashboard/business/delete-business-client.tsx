@@ -39,8 +39,7 @@ const DeleteBusinessClient: React.FC<DeleteBusinessClientProps> = ({
         onClick={handleDeleteClick}
         disabled={!isPaidPlan}
       >
-        <Icons.trash className="mr-2" />
-        Delete Client
+        <Icons.trash className="size-4" />
       </Button>
     </>
   );
