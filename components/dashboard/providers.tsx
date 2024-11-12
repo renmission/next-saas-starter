@@ -2,8 +2,6 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-import { getBusinessTransactions } from "@/lib/business";
-
 // Define the type for a transaction
 interface Transaction {
   id: string;

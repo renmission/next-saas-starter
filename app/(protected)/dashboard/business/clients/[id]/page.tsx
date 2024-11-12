@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
+import { getBusinessClientById } from "@/actions/business/get-client";
 
-import { getBusinessClientById } from "@/lib/business";
 import { getCurrentUser } from "@/lib/session";
 import { ClientInfo } from "@/components/dashboard/client-info";
 import { DashboardHeader } from "@/components/dashboard/header";

@@ -3,8 +3,9 @@
 import { auth } from "@/auth";
 
 import { prisma } from "@/lib/db";
+import { clientNameSchema } from "@/lib/validations/business";
 
-interface BusinessCreateInput {
+interface BusinessClientCreateInput {
   name: string;
   owner: {
     connect: {
@@ -13,7 +14,7 @@ interface BusinessCreateInput {
   };
 }
 
-export async function createNewBusinessClient(data: BusinessCreateInput) {
+export async function createNewBusinessClient(data: BusinessClientCreateInput) {
   try {
     const session = await auth();
 
@@ -21,9 +22,11 @@ export async function createNewBusinessClient(data: BusinessCreateInput) {
       throw new Error("Unauthorized");
     }
 
+    const { name } = clientNameSchema.parse(data);
+
     const newBusiness = await prisma.business.create({
       data: {
-        name: data.name,
+        name: name,
         owner: {
           connect: { id: session.user.id },
         },

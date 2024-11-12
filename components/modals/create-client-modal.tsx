@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { useRouter } from "next/navigation";
-import { createNewBusinessClient } from "@/actions/create-business";
+import { createNewBusinessClient } from "@/actions/business/add-client";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 

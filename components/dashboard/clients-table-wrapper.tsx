@@ -1,6 +1,5 @@
+import { getBusinessClients } from "@/actions/business/get-client";
 import { auth } from "@/auth";
-
-import { getBusinessClients } from "@/lib/business";
 
 import { ClientsTable } from "./client-table";
 
