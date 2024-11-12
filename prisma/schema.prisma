@@ -21,19 +21,39 @@ enum TrustType {
   NEVADA_DYNASTY_TRUST
 }
 
+model Invitation {
+  id        String  @id @default(cuid())
+  email     String
+  businessId String
+  business Business @relation(fields: [businessId], references: [id])
+  status    String @default("pending")
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  @@index([businessId])
+  @@map(name: "invitations")
+}
+
 model Business {
   id        String   @id @default(cuid())
   name      String
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
-  users    User[]
-  trusts   Trust[]
+  status    String @default("pending")
+  priority  String @default("low")
 
   stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
   stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
   stripePriceId          String?   @map(name: "stripe_price_id")
   stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
+
+  ownerId   String
+  owner     User     @relation("OwnedBusinesses", fields: [ownerId], references: [id])
+
+  trusts   Trust[]
+  clients    User[]
+  invitations Invitation[]
 
   @@map(name: "businesses")
 }
@@ -50,7 +70,6 @@ model Trust {
   businessId     String
   business       Business     @relation(fields: [businessId], references: [id])
 
-  
   clientId       String
   client         User         @relation("TrustClient", fields: [clientId], references: [id])
   
@@ -109,6 +128,8 @@ model User {
 
   businessid    String?
   business      Business? @relation(fields: [businessid], references: [id])
+
+  ownedBusinesses Business[] @relation("OwnedBusinesses")
 
   // Professional-specific relations
   managedTrusts  Trust[]  @relation("TrustCreator")

@@ -15,6 +15,7 @@
     "preview": "next build && next start",
     "postinstall": "prisma generate",
     "migrate": "prisma migrate dev --name init",
+    "migrate:deploy": "prisma migrate deploy",
     "email": "email dev --dir emails --port 3333"
   },
   "dependencies": {

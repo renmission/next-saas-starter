@@ -100,3 +100,12 @@ export type TestimonialType = {
   image: string;
   review: string;
 };
+
+export type Client = {
+  id: string;
+  name: string;
+  status: string;
+  priority: string;
+  createdAt: string | number | Date;
+  // amount: number;
+};

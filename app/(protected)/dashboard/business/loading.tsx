@@ -1,14 +1,18 @@
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { DashboardHeader } from "@/components/dashboard/header";
-import { SkeletonSection } from "@/components/shared/section-skeleton";
 
 export default function DashboardBusinessLoading() {
   return (
     <>
-      <DashboardHeader heading="Business" text="Manage your business." />
-      <div className="divide-y divide-muted pb-10">
-        <SkeletonSection />
-        <SkeletonSection />
-        <SkeletonSection card />
+      <div className="flex items-center justify-between">
+        <DashboardHeader heading="Business" text="Manage your business." />
+        <Button disabled>
+          <Skeleton className="h-4 w-[200px]" />
+        </Button>
+      </div>
+      <div className="flex flex-col gap-5">
+        <Skeleton className="h-[200px] w-full rounded-lg" />
       </div>
     </>
   );

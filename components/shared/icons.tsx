@@ -28,6 +28,7 @@ import {
   Puzzle,
   Search,
   Settings,
+  ShieldCheck,
   SunMedium,
   Trash,
   User,
@@ -49,6 +50,7 @@ export const Icons = {
   copy: Copy,
   dashboard: LayoutPanelLeft,
   ellipsis: MoreVertical,
+
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"
@@ -117,6 +119,7 @@ export const Icons = {
   sun: SunMedium,
   trash: Trash,
   handshake: Handshake,
+  shieldCheck: ShieldCheck,
   twitter: ({ ...props }: LucideProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
