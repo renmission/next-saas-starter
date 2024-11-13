@@ -7,9 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import UpdateBusinessClient from "@/components/dashboard/business/update-business-client";
 import { Icons } from "@/components/shared/icons";
-
-import DeleteBusinessClient from "./business/delete-business-client";
 
 interface ClientInfoProps extends React.HTMLAttributes<HTMLDivElement> {
   client: Client;
@@ -36,13 +35,7 @@ export function ClientInfo({ client }: ClientInfoProps) {
               <p className="text-sm opacity-75">Client since {createdDate}</p>
             </div>
           </div>
-          <Button
-            variant="outline"
-            size="icon"
-            className="bg-white/10 transition-colors hover:bg-white/20"
-          >
-            <Icons.settings className="size-4 text-white" />
-          </Button>
+          <UpdateBusinessClient clientId={id} clientName={name} />
         </div>
       </CardHeader>
       <CardContent className="p-6">

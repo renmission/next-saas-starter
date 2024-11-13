@@ -32,6 +32,7 @@ import {
   Search,
   Settings,
   ShieldCheck,
+  SquarePen,
   SunMedium,
   Trash,
   User,
@@ -56,6 +57,7 @@ export const Icons = {
   mail: MailCheck,
   flag: Flag,
   circleCheck: CircleCheck,
+  squarePen: SquarePen,
 
   gitHub: ({ ...props }: LucideProps) => (
     <svg
