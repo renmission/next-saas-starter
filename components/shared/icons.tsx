@@ -6,10 +6,12 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
+  CircleCheck,
   Copy,
   CreditCard,
   File,
   FileText,
+  Flag,
   Handshake,
   HelpCircle,
   Home,
@@ -52,6 +54,8 @@ export const Icons = {
   dashboard: LayoutPanelLeft,
   ellipsis: MoreVertical,
   mail: MailCheck,
+  flag: Flag,
+  circleCheck: CircleCheck,
 
   gitHub: ({ ...props }: LucideProps) => (
     <svg

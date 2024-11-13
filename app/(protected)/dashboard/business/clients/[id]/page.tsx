@@ -5,6 +5,7 @@ import { getCurrentUser } from "@/lib/session";
 import { ClientInfo } from "@/components/dashboard/client-info";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { InviteClientButton } from "@/components/dashboard/invite-client-button";
+import { AddTrustQuestionnaire } from "@/components/dashboard/trust/add-trust-questionnaire";
 
 export default async function ViewTransactionPage({
   params,
@@ -28,8 +29,11 @@ export default async function ViewTransactionPage({
         />
         <InviteClientButton />
       </div>
-      <div className="grid gap-2">
-        <ClientInfo client={client} />
+
+      <ClientInfo client={client} />
+
+      <div className="mt-4 flex justify-end">
+        <AddTrustQuestionnaire clientId={client.id} />
       </div>
     </>
   );

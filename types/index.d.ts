@@ -107,5 +107,7 @@ export type Client = {
   status: string;
   priority: string;
   createdAt: string | number | Date;
+  invitationAccepted?: boolean;
+  invitationSent?: boolean;
   // amount: number;
 };
