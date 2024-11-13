@@ -11,6 +11,7 @@ declare module "next-auth" {
   interface Session {
     user: {
       role: UserRole;
+      isActive: boolean;
     } & DefaultSession["user"];
   }
 }
@@ -42,6 +43,7 @@ export const {
 
         session.user.name = token.name;
         session.user.image = token.picture;
+        session.user.isActive = token.isActive as boolean;
       }
 
       return session;
@@ -58,6 +60,7 @@ export const {
       token.email = dbUser.email;
       token.picture = dbUser.image;
       token.role = dbUser.role;
+      token.isActive = dbUser.isActive;
 
       return token;
     },

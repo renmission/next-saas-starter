@@ -4,9 +4,9 @@ import { Dispatch, SetStateAction } from "react";
 // import { useRouter } from "next/router";
 import { Drawer } from "vaul";
 
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 interface ModalProps {
   children: React.ReactNode;
@@ -16,6 +16,7 @@ interface ModalProps {
   onClose?: () => void;
   desktopOnly?: boolean;
   preventDefaultClose?: boolean;
+  title?: string;
 }
 
 export function Modal({
@@ -26,6 +27,7 @@ export function Modal({
   onClose,
   desktopOnly,
   preventDefaultClose,
+  title = "Dialog",
 }: ModalProps) {
   // const router = useRouter();
 
@@ -92,6 +94,8 @@ export function Modal({
           className,
         )}
       >
+        <DialogTitle className="sr-only">{title}</DialogTitle>
+
         {children}
       </DialogContent>
     </Dialog>

@@ -5,6 +5,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { deleteUser } from "@/actions/user/delete-user";
 import { signOut, useSession } from "next-auth/react";
 import { toast } from "sonner";
 
@@ -25,28 +26,21 @@ function DeleteAccountModal({
 
   async function deleteAccount() {
     setDeleting(true);
-    await fetch(`/api/user`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then(async (res) => {
-      if (res.status === 200) {
-        // delay to allow for the route change to complete
-        await new Promise((resolve) =>
-          setTimeout(() => {
-            signOut({
-              callbackUrl: `${window.location.origin}/`,
-            });
-            resolve(null);
-          }, 500),
-        );
-      } else {
-        setDeleting(false);
-        const error = await res.text();
-        throw error;
-      }
-    });
+    try {
+      await deleteUser();
+      await new Promise((resolve) =>
+        setTimeout(() => {
+          signOut({
+            callbackUrl: `${window.location.origin}`,
+          });
+          resolve(null);
+        }, 500),
+      );
+    } catch (error) {
+      toast.error("An error occurred while deleting your account");
+      setDeleting(false);
+      throw new Error("Failed to delete account");
+    }
   }
 
   return (

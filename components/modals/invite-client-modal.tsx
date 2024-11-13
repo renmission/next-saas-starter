@@ -106,7 +106,7 @@ function InviteClientModal({
             </>
           ) : (
             <>
-              <Icons.post className="mr-2 size-4" />
+              <Icons.mail className="mr-2 size-4" />
               Send Invite
             </>
           )}

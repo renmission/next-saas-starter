@@ -41,3 +41,8 @@ next-env.d.ts
 
 .vscode
 .contentlayer
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

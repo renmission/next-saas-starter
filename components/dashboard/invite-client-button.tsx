@@ -1,7 +1,10 @@
 "use client";
 
+import { Icon } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { useInviteClientModal } from "@/components/modals/invite-client-modal";
+import { Icons } from "@/components/shared/icons";
 
 export function InviteClientButton() {
   const { setShowInviteClientModal, InviteClientModal } =
@@ -10,6 +13,7 @@ export function InviteClientButton() {
   return (
     <>
       <Button onClick={() => setShowInviteClientModal(true)}>
+        <Icons.mail className="mr-2 size-4" />
         Invite a client
       </Button>
       <InviteClientModal />

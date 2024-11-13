@@ -32,9 +32,6 @@ export function ClientInfo({ client }: ClientInfoProps) {
             <Icons.user className="h-5 w-5" />
             Client Details
           </span>
-          <div className="shrink-0">
-            <DeleteBusinessClient clientId={id} clientName={name} />
-          </div>
         </CardTitle>
       </CardHeader>
       <CardContent className="pt-6">

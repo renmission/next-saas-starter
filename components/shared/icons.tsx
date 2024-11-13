@@ -20,6 +20,7 @@ import {
   Loader2,
   LucideIcon,
   LucideProps,
+  MailCheck,
   MessagesSquare,
   Moon,
   MoreVertical,
@@ -50,6 +51,7 @@ export const Icons = {
   copy: Copy,
   dashboard: LayoutPanelLeft,
   ellipsis: MoreVertical,
+  mail: MailCheck,
 
   gitHub: ({ ...props }: LucideProps) => (
     <svg
