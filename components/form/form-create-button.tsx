@@ -7,7 +7,7 @@ import { useCreateFormModal } from "@/components/modals/forms/create-form-modal"
 
 import { Icons } from "../shared/icons";
 
-const CreateFormButton = () => {
+const FormCreateButton = () => {
   const { setShowCreateFormModal, CreateFormModal } = useCreateFormModal();
   return (
     <>
@@ -20,4 +20,4 @@ const CreateFormButton = () => {
   );
 };
 
-export default CreateFormButton;
+export default FormCreateButton;

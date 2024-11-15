@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/session";
 import { constructMetadata } from "@/lib/utils";
 import { ClientsTableWrapper } from "@/components/business";
-import { CreateNewBusinessClientSection } from "@/components/business/create-new-client";
+import { CreateNewClient } from "@/components/business/create-new-client";
 import { DashboardHeader } from "@/components/dashboard/header";
 
 export const metadata = constructMetadata({
@@ -20,7 +20,7 @@ export default async function BusinessPage() {
     <>
       <div className="flex items-center justify-between">
         <DashboardHeader heading="Business" text="Manage your business." />
-        <CreateNewBusinessClientSection />
+        <CreateNewClient />
       </div>
       <div className="flex flex-col gap-5">
         <ClientsTableWrapper />

@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import signUpImage from "@/public/_static/auth/signup-page-img.webp";
 import logo from "@/public/_static/favicons/apple-touch-icon.png";
 
 import { cn } from "@/lib/utils";
@@ -25,7 +26,15 @@ export default function RegisterPage() {
       >
         Login
       </Link>
-      <div className="hidden h-full bg-muted lg:block" />
+      <div className="relative hidden h-full lg:block">
+        <Image
+          src={signUpImage}
+          alt="Sign up background"
+          layout="fill"
+          objectFit="cover"
+          quality={100}
+        />
+      </div>
       <div className="lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">

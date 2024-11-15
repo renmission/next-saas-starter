@@ -6,9 +6,9 @@ import { ClientInfo } from "@/components/business/client-info";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { InviteClientButton } from "@/components/dashboard/invite-client-button";
 import { Forms } from "@/components/form";
-import CreateFormButton from "@/components/forms/create-form-button";
+import FormCreateButton from "@/components/form/form-create-button";
 
-export default async function ViewTransactionPage({
+export default async function ClientPage({
   params,
 }: {
   params: { id: string };
@@ -29,7 +29,7 @@ export default async function ViewTransactionPage({
           text="Manage your client"
         />
         <div className="flex items-center gap-4">
-          <CreateFormButton />
+          <FormCreateButton />
           <InviteClientButton />
         </div>
       </div>

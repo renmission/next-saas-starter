@@ -5,7 +5,7 @@ import { SectionColumns } from "@/components/dashboard/section-columns";
 import { useCreateClientModal } from "@/components/modals/business/create-client-modal";
 import { Icons } from "@/components/shared/icons";
 
-export function CreateNewBusinessClientSection() {
+export function CreateNewClient() {
   const { setShowCreateClientModal, CreateClientModal } =
     useCreateClientModal();
 
