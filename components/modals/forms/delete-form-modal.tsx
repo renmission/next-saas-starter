@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { useRouter } from "next/navigation";
-import { deleteBusinessClient } from "@/actions/business/delete-client";
+import { deleteBusinessForm } from "@/actions/forms/delete-form";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 
@@ -17,46 +17,43 @@ import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { Icons } from "@/components/shared/icons";
 
-interface DeleteClientModalProps {
-  showDeleteClientModal: boolean;
-  setShowDeleteClientModal: Dispatch<SetStateAction<boolean>>;
-  clientId: string;
-  clientName: string;
+interface DeleteFormModalProps {
+  showDeleteFormModal: boolean;
+  setShowDeleteFormModal: Dispatch<SetStateAction<boolean>>;
+  formId: string;
+  formName: string;
 }
 
-function DeleteClientModal({
-  showDeleteClientModal,
-  setShowDeleteClientModal,
-  clientId,
-  clientName,
-}: DeleteClientModalProps) {
+function DeleteFormModal({
+  showDeleteFormModal,
+  setShowDeleteFormModal,
+  formId,
+  formName,
+}: DeleteFormModalProps) {
   const { data: session } = useSession();
   const [deleting, setDeleting] = useState(false);
   const [verificationInput, setVerificationInput] = useState("");
   const router = useRouter();
 
-  const handleDeleteClient = async () => {
+  const handleDeleteForm = async () => {
     if (!session?.user?.id) {
-      toast.error("You must be logged in to delete a client.");
+      toast.error("You must be logged in to delete a form.");
       return;
     }
 
     setDeleting(true);
     try {
-      const result = await deleteBusinessClient(clientId);
-      console.log("Deleted client:", result);
+      const result = await deleteBusinessForm(formId);
+      console.log("Deleted form:", result);
       if (result.status === "success") {
-        setShowDeleteClientModal(false);
-
-        router.replace("/dashboard/business");
-
+        setShowDeleteFormModal(false);
         router.refresh();
       } else {
-        throw new Error("Failed to delete client");
+        throw new Error("Failed to delete form");
       }
     } catch (error) {
-      console.error("Error deleting client:", error);
-      toast.error("Failed to delete client. Please try again.");
+      console.error("Error deleting form:", error);
+      toast.error("Failed to delete form. Please try again.");
     } finally {
       setDeleting(false);
     }
@@ -64,25 +61,24 @@ function DeleteClientModal({
 
   return (
     <Modal
-      showModal={showDeleteClientModal}
-      setShowModal={setShowDeleteClientModal}
+      showModal={showDeleteFormModal}
+      setShowModal={setShowDeleteFormModal}
     >
       <div className="flex flex-col items-center justify-center space-y-3 border-b px-4 py-4 pt-8 sm:px-16">
         <Icons.warning className="h-10 w-10 text-red-500" />
-        <h3 className="text-lg font-medium">Delete Client</h3>
+        <h3 className="text-lg font-medium">Delete Form</h3>
         <p className="text-center text-sm text-gray-500">
-          This action is irreversible. Are you sure you want to delete the
-          client
-          <span className="font-semibold"> {clientName}</span>?
+          This action is irreversible. Are you sure you want to delete the form
+          <span className="font-semibold"> {formName}</span>?
         </p>
       </div>
 
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          toast.promise(handleDeleteClient(), {
-            loading: `Deleting client...`,
-            success: `Client ${clientName} deleted successfully!`,
+          toast.promise(handleDeleteForm(), {
+            loading: `Deleting form...`,
+            success: `Form ${formName} deleted successfully!`,
             error: (err) => err,
           });
         }}
@@ -96,7 +92,7 @@ function DeleteClientModal({
             To verify, type{" "}
             <span className="font-semibold">
               {" "}
-              &quot;delete {clientName}&quot;{" "}
+              &quot;delete {formName}&quot;{" "}
             </span>
             below
           </label>
@@ -106,7 +102,7 @@ function DeleteClientModal({
             type="text"
             value={verificationInput}
             onChange={(e) => setVerificationInput(e.target.value)}
-            placeholder={`delete ${clientName}`}
+            placeholder={`delete ${formName}`}
             className="mt-1 block w-full"
             required
           />
@@ -114,7 +110,7 @@ function DeleteClientModal({
 
         <Button
           type="submit"
-          disabled={verificationInput !== `delete ${clientName}` || deleting}
+          disabled={verificationInput !== `delete ${formName}` || deleting}
           className="bg-red-600 text-white hover:bg-red-700 focus:ring-red-500"
         >
           {deleting ? (
@@ -125,7 +121,7 @@ function DeleteClientModal({
           ) : (
             <>
               <Icons.trash className="mr-2 h-4 w-4" />
-              Delete Client
+              Delete Form
             </>
           )}
         </Button>
@@ -134,30 +130,30 @@ function DeleteClientModal({
   );
 }
 
-export function useDeleteClientModal() {
-  const [showDeleteClientModal, setShowDeleteClientModal] = useState(false);
-  const [clientToDelete, setClientToDelete] = useState<{
+export function useDeleteFormModal() {
+  const [showDeleteFormModal, setShowDeleteFormModal] = useState(false);
+  const [formToDelete, setFormToDelete] = useState<{
     id: string;
     name: string;
   } | null>(null);
 
-  const DeleteClientModalCallback = useCallback(() => {
-    return clientToDelete ? (
-      <DeleteClientModal
-        showDeleteClientModal={showDeleteClientModal}
-        setShowDeleteClientModal={setShowDeleteClientModal}
-        clientId={clientToDelete.id}
-        clientName={clientToDelete.name}
+  const DeleteFormModalCallback = useCallback(() => {
+    return formToDelete ? (
+      <DeleteFormModal
+        showDeleteFormModal={showDeleteFormModal}
+        setShowDeleteFormModal={setShowDeleteFormModal}
+        formId={formToDelete.id}
+        formName={formToDelete.name}
       />
     ) : null;
-  }, [showDeleteClientModal, clientToDelete]);
+  }, [showDeleteFormModal, formToDelete]);
 
   return useMemo(
     () => ({
-      setShowDeleteClientModal,
-      setClientToDelete,
-      DeleteClientModal: DeleteClientModalCallback,
+      setShowDeleteFormModal,
+      setFormToDelete,
+      DeleteFormModal: DeleteFormModalCallback,
     }),
-    [setShowDeleteClientModal, DeleteClientModalCallback],
+    [setShowDeleteFormModal, DeleteFormModalCallback],
   );
 }

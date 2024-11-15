@@ -7,8 +7,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import UpdateBusinessClient from "@/components/dashboard/business/update-business-client";
+import UpdateBusinessClient from "@/components/business/update-business-client";
 import { Icons } from "@/components/shared/icons";
+
+import IconsItem from "../shared/icons-item";
 
 interface ClientInfoProps extends React.HTMLAttributes<HTMLDivElement> {
   client: Client;
@@ -40,8 +42,8 @@ export function ClientInfo({ client }: ClientInfoProps) {
       </CardHeader>
       <CardContent className="p-6">
         <div className="grid-col-1 md:grid-col-2 grid gap-6 lg:grid-cols-3">
-          <InfoItem
-            icon={<Icons.flag className="h-5 w-5" />}
+          <IconsItem
+            icon={<Icons.flag className="h-5 w-5 text-blue-700" />}
             label="Priority"
             value={priority}
             badge={{
@@ -49,8 +51,8 @@ export function ClientInfo({ client }: ClientInfoProps) {
               className: "text-sm capitalize",
             }}
           />
-          <InfoItem
-            icon={<Icons.circleCheck className="h-5 w-5" />}
+          <IconsItem
+            icon={<Icons.circleCheck className="h-5 w-5 text-blue-700" />}
             label="Status"
             value={status}
             badge={{
@@ -58,8 +60,8 @@ export function ClientInfo({ client }: ClientInfoProps) {
               className: "text-sm capitalize",
             }}
           />
-          <InfoItem
-            icon={<Icons.mail className="h-5 w-5" />}
+          <IconsItem
+            icon={<Icons.mail className="h-5 w-5 text-blue-700" />}
             label="Invitation"
             value={
               client.invitationAccepted
@@ -80,35 +82,5 @@ export function ClientInfo({ client }: ClientInfoProps) {
         </div>
       </CardContent>
     </Card>
-  );
-}
-
-interface InfoItemProps {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-  badge?: {
-    variant: "default" | "secondary" | "destructive" | "outline";
-    className?: string;
-  };
-}
-
-function InfoItem({ icon, label, value, badge }: InfoItemProps) {
-  return (
-    <div className="flex items-center space-x-3">
-      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
-        {icon}
-      </div>
-      <div>
-        <p className="text-sm font-medium text-muted-foreground">{label}</p>
-        {badge ? (
-          <Badge variant={badge.variant} className={badge.className}>
-            {value}
-          </Badge>
-        ) : (
-          <p className="text-base font-semibold">{value}</p>
-        )}
-      </div>
-    </div>
   );
 }

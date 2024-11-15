@@ -2,8 +2,8 @@ import { redirect } from "next/navigation";
 
 import { getCurrentUser } from "@/lib/session";
 import { constructMetadata } from "@/lib/utils";
-import { ClientsTableWrapper } from "@/components/dashboard/clients-table-wrapper";
-import { CreateNewBusinessClientSection } from "@/components/dashboard/create-new-client";
+import { ClientsTableWrapper } from "@/components/business";
+import { CreateNewBusinessClientSection } from "@/components/business/create-new-client";
 import { DashboardHeader } from "@/components/dashboard/header";
 
 export const metadata = constructMetadata({

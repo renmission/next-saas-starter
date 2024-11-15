@@ -34,6 +34,44 @@ model Invitation {
   @@map(name: "invitations")
 }
 
+model Form {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  fields      Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  businessId  String
+  business    Business @relation(fields: [businessId], references: [id])
+
+  creatorId   String
+  creator     User     @relation("FormCreator", fields: [creatorId], references: [id])
+
+  responses   FormResponse[]
+
+  @@index([businessId])
+  @@index([creatorId])
+  @@map(name: "forms")
+}
+
+model FormResponse {
+  id        String   @id @default(cuid())
+  data      Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  formId    String
+  form      Form     @relation(fields: [formId], references: [id])
+
+  respondentId String?
+  respondent   User?    @relation("FormRespondent", fields: [respondentId], references: [id])
+
+  @@index([formId])
+  @@index([respondentId])
+  @@map(name: "form_responses")
+}
+
 model Business {
   id        String   @id @default(cuid())
   name      String
@@ -54,6 +92,8 @@ model Business {
   trusts   Trust[]
   clients    User[]
   invitations Invitation[]
+  forms      Form[]
+
 
   @@map(name: "businesses")
 }
@@ -143,6 +183,9 @@ model User {
   stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
   stripePriceId          String?   @map(name: "stripe_price_id")
   stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
+
+  createdForms Form[] @relation("FormCreator")
+  formResponses FormResponse[] @relation("FormRespondent")
 
   isActive Boolean @default(true)
 

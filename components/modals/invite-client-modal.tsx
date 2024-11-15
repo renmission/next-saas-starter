@@ -60,7 +60,7 @@ function InviteClientModal({
       className="gap-0"
     >
       <div className="flex flex-col items-center justify-center space-y-3 border-b p-4 pt-8 sm:px-16">
-        <Icons.add className="size-10 text-primary" />
+        <Icons.mail className="size-10 text-primary" />
         <h3 className="text-lg font-semibold">Invite Client</h3>
         <p className="text-center text-sm text-muted-foreground">
           Enter the email address of the client you want to invite.

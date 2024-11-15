@@ -25,12 +25,12 @@ export const sidebarLinks: SidebarNavItem[] = [
         title: "Billing",
         authorizeOnly: UserRole.PROFESSIONAL,
       },
-      {
-        href: "/dashboard/trust",
-        icon: "shieldCheck",
-        title: "Trust",
-        authorizeOnly: UserRole.PROFESSIONAL,
-      },
+      // {
+      //   href: "/dashboard/trust",
+      //   icon: "shieldCheck",
+      //   title: "Trust",
+      //   authorizeOnly: UserRole.PROFESSIONAL,
+      // },
       // { href: "/dashboard/charts", icon: "lineChart", title: "Charts" },
       {
         href: "/admin/orders",

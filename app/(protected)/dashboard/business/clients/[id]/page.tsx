@@ -2,10 +2,11 @@ import { redirect } from "next/navigation";
 import { getBusinessClientById } from "@/actions/business/get-client";
 
 import { getCurrentUser } from "@/lib/session";
-import { ClientInfo } from "@/components/dashboard/client-info";
+import { ClientInfo } from "@/components/business/client-info";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { InviteClientButton } from "@/components/dashboard/invite-client-button";
-import { AddTrustQuestionnaire } from "@/components/dashboard/trust/add-trust-questionnaire";
+import { Forms } from "@/components/form";
+import CreateFormButton from "@/components/forms/create-form-button";
 
 export default async function ViewTransactionPage({
   params,
@@ -22,19 +23,20 @@ export default async function ViewTransactionPage({
 
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col justify-between gap-6 md:flex-row">
         <DashboardHeader
-          heading={`Business Clients`}
-          text="Manage your clients."
+          heading={`Business Client`}
+          text="Manage your client"
         />
-        <InviteClientButton />
+        <div className="flex items-center gap-4">
+          <CreateFormButton />
+          <InviteClientButton />
+        </div>
       </div>
 
       <ClientInfo client={client} />
 
-      <div className="mt-4 flex justify-end">
-        <AddTrustQuestionnaire clientId={client.id} />
-      </div>
+      <Forms client={client.id} />
     </>
   );
 }

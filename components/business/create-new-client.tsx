@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { SectionColumns } from "@/components/dashboard/section-columns";
-import { useCreateClientModal } from "@/components/modals/create-client-modal";
+import { useCreateClientModal } from "@/components/modals/business/create-client-modal";
 import { Icons } from "@/components/shared/icons";
 
 export function CreateNewBusinessClientSection() {

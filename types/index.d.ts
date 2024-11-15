@@ -111,3 +111,16 @@ export type Client = {
   invitationSent?: boolean;
   // amount: number;
 };
+
+export interface Form {
+  id: string;
+  name: string;
+  description: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  businessId: string;
+  creator: {
+    email: string | null;
+    name: string | null;
+  };
+}
