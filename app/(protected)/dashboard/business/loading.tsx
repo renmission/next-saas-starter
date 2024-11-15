@@ -8,7 +8,7 @@ export default function DashboardBusinessLoading() {
       <div className="flex items-center justify-between">
         <DashboardHeader heading="Business" text="Manage your business." />
         <Button disabled>
-          <Skeleton className="h-4 w-[200px]" />
+          <Skeleton className="h-4 w-[150px]" />
         </Button>
       </div>
       <div className="flex flex-col gap-5">
