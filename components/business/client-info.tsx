@@ -22,8 +22,8 @@ export function ClientInfo({ client }: ClientInfoProps) {
 
   return (
     <Card className="overflow-hidden shadow-lg">
-      <CardHeader className="bg-blue-700 text-white">
-        <div className="flex items-center justify-between">
+      <CardHeader className="text-white">
+        <div className="flex items-center justify-between gap-2">
           <div className="flex items-center space-x-4">
             <Avatar className="h-12 w-12 border-2 border-white">
               <AvatarImage
@@ -33,14 +33,18 @@ export function ClientInfo({ client }: ClientInfoProps) {
               <AvatarFallback>{name.charAt(0)}</AvatarFallback>
             </Avatar>
             <div>
-              <CardTitle className="text-2xl font-bold">{name}</CardTitle>
-              <p className="text-sm opacity-75">Client since {createdDate}</p>
+              <CardTitle className="text-2xl font-bold text-primary">
+                {name}
+              </CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Client since {createdDate}
+              </p>
             </div>
           </div>
           <UpdateBusinessClient clientId={id} clientName={name} />
         </div>
       </CardHeader>
-      <CardContent className="p-6">
+      <CardContent className="border-t p-6">
         <div className="grid-col-1 md:grid-col-2 grid gap-6 lg:grid-cols-3">
           <IconsItem
             icon={<Icons.flag className="h-5 w-5 text-blue-700" />}

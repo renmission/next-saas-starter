@@ -1,4 +1,5 @@
 import { User } from "@prisma/client";
+import { JsonValue } from "@prisma/client/runtime/library";
 import type { Icon } from "lucide-react";
 
 import { Icons } from "@/components/shared/icons";
@@ -123,4 +124,57 @@ export interface Form {
     email: string | null;
     name: string | null;
   };
+}
+export enum TrustType {
+  NEVADA_DYNASTY_TRUST = "Nevada Dynasty Trust",
+  NEVADA_ASSET_PROTECTION_TRUST = "Nevada Asset Protection Trust",
+}
+export interface Trust {
+  id: string;
+  name: string;
+  type: string;
+  documents?: JsonValue;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+  // clientId?: string;
+  businessId: string;
+  professional: {
+    email: string | null;
+    name: string | null;
+  };
+}
+
+export interface FormField {
+  name: string;
+  label: string;
+  type:
+    | "text"
+    | "number"
+    | "email"
+    | "password"
+    | "select"
+    | "checkbox"
+    | "textarea";
+  placeholder?: string;
+  options?: { value: string; label: string }[];
+  required?: boolean;
+}
+
+export interface FormStep {
+  title: string;
+  description?: string;
+  fields: FormField[];
+}
+
+export interface MultiStepFormProps {
+  steps: FormStep[];
+  onSubmit: (data: Record<string, any>) => void;
+}
+
+export enum TrustStatus {
+  PENDING = "PENDING",
+  IN_PROGRESS = "IN_PROGRESS",
+  ARCHIVED = "ARCHIVED",
+  COMPLETED = "COMPLETED",
 }

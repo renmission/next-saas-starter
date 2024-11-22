@@ -24,3 +24,8 @@ export interface MultiStepFormProps {
   steps: FormStep[];
   onSubmit: (data: Record<string, any>) => void;
 }
+
+export enum TrustType {
+  NEVADA_DYNASTY_TRUST = "NEVADA_DYNASTY_TRUST",
+  NEVADA_ASSET_PROTECTION_TRUST = "NEVADA_ASSET_PROTECTION_TRUST",
+}

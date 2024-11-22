@@ -33,12 +33,11 @@ const UpdateBusinessClient: React.FC<UpdateBusinessClientProps> = ({
     <>
       <UpdateClientModal />
       <Button
-        className="text-white"
         variant="outline"
         onClick={handleDeleteClick}
         disabled={!isPaidPlan}
       >
-        <Icons.settings className="size-4" />
+        <Icons.settings className="size-4 text-blue-700" />
       </Button>
     </>
   );

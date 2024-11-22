@@ -76,27 +76,18 @@ export function UserAccountNav() {
                 </li>
               ) : null}
 
-              <li className="rounded-lg text-foreground hover:bg-muted">
-                <Link
-                  href="/dashboard"
-                  onClick={closeDrawer}
-                  className="flex w-full items-center gap-3 px-2.5 py-2"
-                >
-                  <LayoutDashboard className="size-4" />
-                  <p className="text-sm">Dashboard</p>
-                </Link>
-              </li>
-
-              <li className="rounded-lg text-foreground hover:bg-muted">
-                <Link
-                  href="/dashboard/settings"
-                  onClick={closeDrawer}
-                  className="flex w-full items-center gap-3 px-2.5 py-2"
-                >
-                  <Settings className="size-4" />
-                  <p className="text-sm">Settings</p>
-                </Link>
-              </li>
+              {user.role === "ADMIN" ? (
+                <li className="rounded-lg text-foreground hover:bg-muted">
+                  <Link
+                    href="/dashboard/settings"
+                    onClick={closeDrawer}
+                    className="flex w-full items-center gap-3 px-2.5 py-2"
+                  >
+                    <Settings className="size-4" />
+                    <p className="text-sm">Settings</p>
+                  </Link>
+                </li>
+              ) : null}
 
               <li
                 className="rounded-lg text-foreground hover:bg-muted"

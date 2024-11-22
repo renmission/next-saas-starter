@@ -117,7 +117,7 @@ const columns: ColumnDef<Client>[] = [
     cell: ({ row }) => {
       const client = row.original;
       return (
-        <Link href={`/dashboard/business/clients/${client.id}`}>
+        <Link href={`/dashboard/business/${client.id}`}>
           <div className="text-center capitalize">{row.getValue("name")}</div>
         </Link>
       );
@@ -151,38 +151,6 @@ const columns: ColumnDef<Client>[] = [
             })}
           >
             {status}
-          </Badge>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "priority",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="w-full"
-        >
-          Priority
-          <ArrowUpDown className="ml-2 size-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const priority = row.getValue("priority") as string;
-      return (
-        <div className="text-center">
-          <Badge
-            variant="outline"
-            className={cn("capitalize", {
-              "bg-red-100 text-red-800": priority === "high",
-              "bg-yellow-100 text-yellow-800": priority === "medium",
-              "bg-green-100 text-green-800": priority === "low",
-            })}
-          >
-            {priority}
           </Badge>
         </div>
       );

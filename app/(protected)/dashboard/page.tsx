@@ -2,8 +2,6 @@ import { getCurrentUser } from "@/lib/session";
 import { constructMetadata } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { DashboardHeader } from "@/components/dashboard/header";
-import { MultiStepForm } from "@/components/forms/multi-step-form";
-import { defaultFormSteps } from "@/components/forms/multi-step-form/form-steps";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 
 export const metadata = constructMetadata({

@@ -47,7 +47,7 @@ function DeleteFormModal({
       console.log("Deleted form:", result);
       if (result.status === "success") {
         setShowDeleteFormModal(false);
-        router.refresh();
+        window.location.reload(); // TODO: Need to implement a more efficient way to refresh the page
       } else {
         throw new Error("Failed to delete form");
       }

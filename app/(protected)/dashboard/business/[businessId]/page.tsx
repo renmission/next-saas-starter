@@ -5,19 +5,20 @@ import { getCurrentUser } from "@/lib/session";
 import { ClientInfo } from "@/components/business/client-info";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { InviteClientButton } from "@/components/dashboard/invite-client-button";
-import { Forms } from "@/components/form";
-import FormCreateButton from "@/components/form/form-create-button";
+import { Trusts } from "@/components/trusts";
+import FormCreateButton from "@/components/trusts/create-button";
+import AddTrustButton from "@/components/trusts/create-button";
 
 export default async function ClientPage({
   params,
 }: {
-  params: { id: string };
+  params: { businessId: string };
 }) {
   const user = await getCurrentUser();
 
   if (!user?.id) redirect("/login");
 
-  const client = await getBusinessClientById(params.id);
+  const client = await getBusinessClientById(params.businessId);
 
   if (!client) redirect("/dashboard/business/clients");
 
@@ -29,14 +30,14 @@ export default async function ClientPage({
           text="Manage your client"
         />
         <div className="flex items-center gap-4">
-          <FormCreateButton />
+          <AddTrustButton />
           <InviteClientButton />
         </div>
       </div>
 
       <ClientInfo client={client} />
 
-      <Forms client={client.id} />
+      <Trusts client={client.id} />
     </>
   );
 }

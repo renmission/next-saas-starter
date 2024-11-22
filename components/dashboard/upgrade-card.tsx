@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,16 +11,16 @@ import {
 
 export function UpgradeCard() {
   return (
-    <Card className="md:max-xl:rounded-none md:max-xl:border-none md:max-xl:shadow-none">
-      <CardHeader className="md:max-xl:px-4">
-        <CardTitle>Upgrade to Pro</CardTitle>
+    <Card className="mx-auto md:max-w-md">
+      <CardHeader>
+        <CardTitle>Free Plan</CardTitle>
         <CardDescription>
-          Unlock all features and get unlimited access to our support team.
+          You`re currently on the free plan. Upgrade to unlock more features.
         </CardDescription>
       </CardHeader>
-      <CardContent className="md:max-xl:px-4">
-        <Button size="sm" className="w-full">
-          Upgrade
+      <CardContent>
+        <Button size="lg" className="w-full">
+          <Link href="/pricing">Upgrade to Pro</Link>
         </Button>
       </CardContent>
     </Card>

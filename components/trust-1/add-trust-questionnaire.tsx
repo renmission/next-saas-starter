@@ -38,7 +38,7 @@ export function AddTrustQuestionnaire({ clientId }: { clientId: string }) {
       <DropdownMenuTrigger asChild>
         <Button variant="default">
           <Icons.add className="mr-2 size-4" />
-          Create Form
+          Add Trust
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-8">

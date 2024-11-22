@@ -14,7 +14,6 @@ import { cn } from "@/lib/utils";
 import { useScroll } from "@/hooks/use-scroll";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { DocsSearch } from "@/components/docs/search";
 import { ModalContext } from "@/components/modals/providers";
 import { Icons } from "@/components/shared/icons";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
@@ -85,9 +84,6 @@ export function NavBar({ scroll = false }: NavBarProps) {
           {/* right header for docs */}
           {documentation ? (
             <div className="hidden flex-1 items-center space-x-4 sm:justify-end lg:flex">
-              <div className="hidden lg:flex lg:grow-0">
-                <DocsSearch />
-              </div>
               <div className="flex lg:hidden">
                 <Icons.search className="size-6 text-muted-foreground" />
               </div>

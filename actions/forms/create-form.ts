@@ -20,7 +20,7 @@ interface CreateFormInput {
   businessId: string;
 }
 
-export async function createForm(data: CreateFormInput) {
+export async function createBusinessForm(data: CreateFormInput) {
   try {
     const session = await auth();
 
@@ -28,13 +28,15 @@ export async function createForm(data: CreateFormInput) {
       throw new Error("Unauthorized");
     }
 
+    if (!data.businessId) {
+      throw new Error("Business ID is required");
+    }
+
     const newForm = await prisma.form.create({
       data: {
         name: data.name,
         description: data.description,
-        fields: data.fields
-          ? JSON.parse(JSON.stringify(data.fields))
-          : undefined,
+        fields: data.fields ? JSON.parse(JSON.stringify(data.fields)) : null,
         business: {
           connect: {
             id: data.businessId,
@@ -47,8 +49,7 @@ export async function createForm(data: CreateFormInput) {
         },
       },
     });
-
-    return { success: true, form: newForm };
+    return { status: "success", form: newForm };
   } catch (error) {
     console.error(error);
     throw error;

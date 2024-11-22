@@ -98,20 +98,30 @@ model Business {
   @@map(name: "businesses")
 }
 
+enum TrustStatus {
+  PENDING
+  IN_PROGRESS
+  ARCHIVED
+  COMPLETED
+}
+
 model Trust {
   id String @id @default(cuid())
   name String
   type TrustType
-  status String
+  status TrustStatus  @default(PENDING)
+
   documents Json?
+  clientAnswers Json?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   businessId     String
   business       Business     @relation(fields: [businessId], references: [id])
 
-  clientId       String
-  client         User         @relation("TrustClient", fields: [clientId], references: [id])
+  clientId       String?
+  client         User?    @relation("TrustClient", fields: [clientId], references: [id])
   
   professionalId String
   professional   User         @relation("TrustCreator", fields: [professionalId], references: [id])

@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Check, ChevronRight, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { updateTrustAnswers } from "@/actions/user/update-trust-answer";
+import { ChevronRight, Loader2 } from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -29,13 +30,15 @@ import { FormField, FormStep } from "./types";
 
 interface MultiStepFormProps {
   steps: FormStep[];
+  trustId: string;
 }
 
-export function MultiStepForm({ steps }: MultiStepFormProps) {
+export function MultiStepForm({ steps, trustId }: MultiStepFormProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const navigation = useRouter();
 
   const handleInputChange = (name: string, value: string) => {
     setFormData((prev) => ({
@@ -53,9 +56,7 @@ export function MultiStepForm({ steps }: MultiStepFormProps) {
     );
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     if (!isStepValid()) {
       toast({
         title: "Validation Error",
@@ -64,25 +65,27 @@ export function MultiStepForm({ steps }: MultiStepFormProps) {
       });
       return;
     }
-
     if (currentStep === steps.length - 1) {
       try {
         setIsSubmitting(true);
-        // Here you would typically send the data to your API
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulated API call
 
-        toast({
-          title: "Success!",
-          description: "Form submitted successfully.",
+        await updateTrustAnswers({
+          trustId: trustId,
+          clientAnswers: formData,
         });
 
-        // Optional: Reset form after successful submission
         setFormData({});
         setCurrentStep(0);
+
+        navigation.refresh();
+
+        navigation.replace(`/dashboard/trusts/${trustId}`);
       } catch (error) {
+        console.error("Error submitting form:", error);
         toast({
           title: "Error",
-          description: "Something went wrong. Please try again.",
+          description:
+            error.message || "Something went wrong. Please try again.",
           variant: "destructive",
         });
       } finally {
@@ -146,42 +149,30 @@ export function MultiStepForm({ steps }: MultiStepFormProps) {
 
   return (
     <div className="mx-auto w-full">
-      {/* Progress Steps */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between">
-          {steps.map((step, index) => (
-            <div key={index} className="flex items-center">
-              <div
-                className={cn(
-                  "flex h-10 w-10 items-center justify-center rounded-full border-2 transition-colors",
-                  currentStep > index
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : currentStep === index
-                      ? "border-primary text-primary"
-                      : "border-muted text-muted-foreground",
-                )}
-              >
-                {currentStep > index ? (
-                  <Check className="h-5 w-5" />
-                ) : (
-                  <span>{index + 1}</span>
-                )}
-              </div>
-              {index < steps.length - 1 && (
-                <div
-                  className={cn(
-                    "mx-2 h-1 w-16 transition-colors",
-                    currentStep > index ? "bg-primary" : "bg-muted",
-                  )}
-                />
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Form */}
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          try {
+            toast({
+              title: "Creating form...",
+              description: "Please wait while we process your submission.",
+            });
+            await handleSubmit();
+            toast({
+              title: "Success",
+              description: "Form created successfully!",
+            });
+          } catch (error) {
+            toast({
+              title: "Error",
+              description:
+                error.message || "An error occurred while creating the form.",
+              variant: "destructive",
+            });
+          }
+        }}
+      >
         <Card>
           <CardHeader>
             <CardTitle>{steps[currentStep].title}</CardTitle>

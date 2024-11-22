@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Dispatch,
   SetStateAction,
@@ -7,8 +5,8 @@ import {
   useMemo,
   useState,
 } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { createForm } from "@/actions/forms/create-form";
+import { useParams } from "next/navigation";
+import { createBusinessForm } from "@/actions/forms/create-form";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 
@@ -29,7 +27,6 @@ function CreateFormModal({
   const [creating, setCreating] = useState(false);
   const [formName, setFormName] = useState("");
   const [formDescription, setFormDescription] = useState("");
-  const router = useRouter();
   const params = useParams();
 
   async function handleFormCreation() {
@@ -38,19 +35,20 @@ function CreateFormModal({
       if (!session?.user?.id) {
         throw new Error("User not authenticated.");
       }
-      const result = await createForm({
+      const result = await createBusinessForm({
         name: formName,
         description: formDescription,
-        businessId: params.id as string,
+        businessId: params.businessId as string,
       });
-      if (result) {
+
+      if (result.status === "success") {
         setShowCreateFormModal(false);
-        router.refresh();
+        window.location.reload(); // TODO: Need to implement a more efficient way to refresh the page
       } else {
-        toast.error("Failed to create form. Please try again.");
+        toast.error("Failed to add trust. Please try again.");
       }
     } catch (error) {
-      toast.error("Failed to create form. Please try again.");
+      toast.error("Failed to add trust. Please try again.");
     } finally {
       setCreating(false);
     }
@@ -127,7 +125,7 @@ function CreateFormModal({
           ) : (
             <>
               <Icons.add className="mr-2 size-4" />
-              Create Form
+              Add Trust
             </>
           )}
         </Button>
