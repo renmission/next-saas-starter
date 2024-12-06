@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { BarChart, DollarSign, User } from "lucide-react";
 
 import { getCurrentUser } from "@/lib/session";
 import { constructMetadata } from "@/lib/utils";
@@ -10,6 +11,27 @@ export const metadata = constructMetadata({
   title: "Admin – SaaS Starter",
   description: "Admin page for only admin management.",
 });
+
+export const sampleInfoCardData = [
+  {
+    title: "Total Users",
+    total: "123",
+    icon: User,
+    percentage: "50",
+  },
+  {
+    title: "Total Revenue",
+    total: "$1,234,567",
+    icon: DollarSign,
+    percentage: "25",
+  },
+  {
+    title: "Total Transactions",
+    total: "123,456",
+    icon: BarChart,
+    percentage: "75",
+  },
+];
 
 export default async function AdminPage() {
   const user = await getCurrentUser();
@@ -23,10 +45,15 @@ export default async function AdminPage() {
       />
       <div className="flex flex-col gap-5">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          <InfoCard />
-          <InfoCard />
-          <InfoCard />
-          <InfoCard />
+          {sampleInfoCardData.map((cardData) => (
+            <InfoCard
+              key={cardData.title}
+              title={cardData.title}
+              total={cardData.total}
+              icon={cardData.icon}
+              percentage={cardData.percentage}
+            />
+          ))}
         </div>
         <TransactionsList />
         <TransactionsList />

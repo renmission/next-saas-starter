@@ -56,7 +56,7 @@ export function TrustInfoDisplay({ trust }: TrustInfoDisplayProps) {
               <div>
                 <dt className="font-medium text-gray-500">
                   <Icons.user className="mr-2 inline-block h-4 w-4 print:hidden" />
-                  Professional
+                  Created By
                 </dt>
                 <dd className="mt-1">
                   {trust.professional.name} <br />
