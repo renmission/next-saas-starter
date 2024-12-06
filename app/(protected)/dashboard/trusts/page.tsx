@@ -15,7 +15,7 @@ export default async function trustPage() {
 
   const firstName = getFirstName(user.name);
 
-  const trusts = await getClientTrusts();
+  const { data, businessId } = await getClientTrusts();
 
   return (
     <>
@@ -24,17 +24,13 @@ export default async function trustPage() {
           heading={`Hello ${firstName},`}
           text="Welcome back!, Below are the list of your trust."
         />
-        {trusts.length && (
-          <AddTrustButton
-            businessId={trusts[0].businessId}
-            clientId={user.id}
-          />
-        )}
+
+        <AddTrustButton businessId={businessId} clientId={user.id} />
       </div>
 
       <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2">
-        {trusts.length ? (
-          trusts.map((trust: Trust) => (
+        {data.length ? (
+          data.map((trust: Trust) => (
             <TrustCard key={trust.id} {...trust} userRole={user.role} />
           ))
         ) : (

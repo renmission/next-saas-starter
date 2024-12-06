@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 import { useParams } from "next/navigation";
+import { createTrustPayment } from "@/actions/stripe/stripe-trust-payment";
 import { createTrust } from "@/actions/trusts/create-trust";
 import { TrustType } from "@prisma/client";
 import { useSession } from "next-auth/react";
@@ -50,6 +51,10 @@ function CreateTrustModal({
       if (!session?.user?.id) {
         throw new Error("User not authenticated.");
       }
+      const stripeSession = await createTrustPayment(businessId);
+      console.log("stripeSession:::::::::::::::::::::::::::::::::::::");
+      console.log("stripeSession:::::::::::::::::::::", stripeSession);
+      console.log("stripeSession:::::::::::::::::::::::::::::::::::::");
       const result = await createTrust({
         name: formatTrustName(selectedTrust),
         type: selectedTrust,

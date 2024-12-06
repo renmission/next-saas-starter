@@ -7,6 +7,8 @@ import { TrustStatus, TrustType } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { getTrustQuestionsByTrustType } from "@/components/forms/trusts-form/data";
 
+import { createTrustPayment } from "../stripe/stripe-trust-payment";
+
 interface CreateTrustInput {
   name: string;
   type: TrustType;
@@ -17,22 +19,35 @@ interface CreateTrustInput {
 export async function createTrust(data: CreateTrustInput) {
   try {
     const session = await auth();
+    const user = session?.user;
 
-    if (!session?.user) {
-      throw new Error("Unauthorized");
+    if (!user || !user.id) {
+      throw new Error("Unauthorized: User ID is required");
     }
 
     if (!data.businessId) {
-      throw new Error("Client ID and Business ID are required");
+      throw new Error("Business ID is required");
     }
+
+    // if (!payment.paymentId) {
+    //   throw new Error("Payment ID is required");
+    // }
+
+    // const isPaymentExists = await prisma.trustPayment.findUnique({
+    //   where: { id: payment.paymentId, status: "completed" },
+    // });
+
+    // if (!isPaymentExists) {
+    //   throw new Error("Payment not found or not completed");
+    // }
 
     const docs = getTrustQuestionsByTrustType(data.type as any);
 
     const documentsJson = JSON.parse(JSON.stringify(docs));
 
     // Testing Purpose
-    // const clientId = "cm3svrwvu0006ewnpx3i9fv0r";
-    // data.clientId = clientId;
+    const clientId = "cm49w4w0i0006ds56gs6ya3h5";
+    data.clientId = clientId;
 
     const newTrust = await prisma.trust.create({
       data: {
@@ -55,6 +70,11 @@ export async function createTrust(data: CreateTrustInput) {
             id: data.clientId,
           },
         },
+        // payment: {
+        //   connect: {
+        //     id: payment.paymentId,
+        //   },
+        // },
       },
     });
 

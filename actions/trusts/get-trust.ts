@@ -93,7 +93,7 @@ export async function getClientTrusts() {
       throw new Error("Unauthorized");
     }
 
-    const trust = await prisma.trust.findMany({
+    const trusts = await prisma.trust.findMany({
       where: { clientId: session.user.id },
       select: {
         id: true,
@@ -116,7 +116,9 @@ export async function getClientTrusts() {
       },
     });
 
-    return trust;
+    const businessId = trusts.length > 0 ? trusts[0].businessId : null;
+
+    return { data: trusts, businessId };
   } catch (error) {
     console.error(error);
     console.error(error.message);

@@ -94,6 +94,7 @@ model Business {
   invitations Invitation[]
   forms      Form[]
 
+  trustPayments TrustPayment[]
 
   @@map(name: "businesses")
 }
@@ -103,6 +104,25 @@ enum TrustStatus {
   IN_PROGRESS
   ARCHIVED
   COMPLETED
+}
+
+model TrustPayment {
+  id              String   @id @default(cuid())
+  professionalId  String
+  professional    User     @relation(fields: [professionalId], references: [id])
+  businessId      String
+  business        Business @relation(fields: [businessId], references: [id])
+  trustId         String?  @unique
+  trust           Trust?   @relation(fields: [trustId], references: [id])
+  stripeSessionId String   @unique
+  status          String
+  amount          Float?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([professionalId])
+  @@index([businessId])
+  @@map(name: "trust_payments")
 }
 
 model Trust {
@@ -125,6 +145,8 @@ model Trust {
   
   professionalId String
   professional   User         @relation("TrustCreator", fields: [professionalId], references: [id])
+
+  payment        TrustPayment?
 
   @@index([businessId])
   @@index([clientId])
@@ -175,6 +197,9 @@ model User {
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
   role          UserRole  @default(PROFESSIONAL)
+
+  trustPayments TrustPayment[]
+
 
   businessid    String?
   business      Business? @relation(fields: [businessid], references: [id])

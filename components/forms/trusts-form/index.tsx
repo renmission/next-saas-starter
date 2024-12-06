@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createTrust } from "@/actions/trusts/create-trust";
 import { updateTrust } from "@/actions/trusts/update-trust";
 import { submitTrustAnswers } from "@/actions/user/update-trust-answer";
 import { ChevronRight, Loader2 } from "lucide-react";
@@ -95,8 +94,6 @@ export function TrustForm({
             type: formData.type,
             clientAnswers: formData,
           });
-
-          console.log("RESULT:::::::::", result);
         }
 
         if (result.status === "success") {
