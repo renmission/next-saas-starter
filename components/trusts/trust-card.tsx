@@ -62,7 +62,7 @@ export async function TrustCard({
         {status === "IN_PROGRESS" && userRole === "CLIENT" && (
           <Button variant="outline" size="sm" className="w-full sm:w-auto">
             <Link
-              href={`/dashboard/trusts/${id}`}
+              href={`/dashboard/business/${businessId}/trusts/${id}?mode=edit`}
               className="flex w-full items-center justify-center"
             >
               <Icons.filePenLine className="mr-2 size-4 text-blue-700" />

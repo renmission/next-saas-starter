@@ -15,8 +15,6 @@ export default async function trustIdPage({
 
   const docs = await getTrustById(params.trustId);
 
-  console.log("Trusts:", docs);
-
   if (!docs) {
     return (
       <div className="text-center">

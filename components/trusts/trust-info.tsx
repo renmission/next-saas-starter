@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,10 +13,9 @@ import { TrustProgress } from "./trust-progress";
 
 interface TrustInfoDisplayProps {
   trust: Record<string, any>;
-  onEdit?: () => void;
 }
 
-export function TrustInfoDisplay({ trust, onEdit }: TrustInfoDisplayProps) {
+export function TrustInfoDisplay({ trust }: TrustInfoDisplayProps) {
   return (
     <Card className="mx-auto w-full max-w-7xl print:border-none print:shadow-none">
       <CardHeader className="border-b print:border-none">
@@ -23,17 +24,14 @@ export function TrustInfoDisplay({ trust, onEdit }: TrustInfoDisplayProps) {
           <div className="flex items-center space-x-2">
             <PrintButton />
 
-            {onEdit && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={onEdit}
-                className="print:hidden"
-              >
-                <Icons.settings className="mr-2 h-4 w-4" />
-                Edit
+            <Link
+              href={`/dashboard/business/${trust.businessId}/trusts/${trust.id}?mode=edit`}
+            >
+              <Button variant="outline" size="sm" className="print:hidden">
+                <Icons.filePenLine className="mr-2 size-4" />
+                Update
               </Button>
-            )}
+            </Link>
           </div>
         </div>
       </CardHeader>

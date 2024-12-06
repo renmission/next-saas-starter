@@ -3,7 +3,7 @@ import React from "react";
 import { Icons } from "@/components/shared/icons";
 
 interface ClientAnswersDisplayProps {
-  clientAnswers: Record<string, string>;
+  clientAnswers?: Record<string, string> | null;
 }
 
 interface CategoryConfig {
@@ -23,53 +23,48 @@ export function TrustAnswersDisplay({
     return capitalizedWords.join(" ");
   };
 
+  const personalInfoKeys = [
+    "firstName",
+    "lastName",
+    "dateOfBirth",
+    "maritalStatus",
+    "occupation",
+  ];
+
+  const contactInfoKeys = [
+    "email",
+    "phone",
+    "streetAddress",
+    "city",
+    "country",
+    "preferredContact",
+  ];
+
   const categories: CategoryConfig[] = [
     {
       title: "Personal Information",
-      keys: [
-        "firstName",
-        "lastName",
-        "dateOfBirth",
-        "maritalStatus",
-        "occupation",
-      ],
-      icon: <Icons.user className="h-5 w-5" />,
+      keys: personalInfoKeys,
+      icon: <Icons.user className="size-5" />,
     },
     {
       title: "Contact Information",
-      keys: [
-        "email",
-        "phone",
-        "streetAddress",
-        "city",
-        "country",
-        "preferredContact",
-      ],
-      icon: <Icons.mail className="h-5 w-5" />,
+      keys: contactInfoKeys,
+      icon: <Icons.mail className="size-5" />,
     },
     {
       title: "Other Information",
-      keys: Object.keys(clientAnswers).filter(
-        (key) =>
-          ![
-            "firstName",
-            "lastName",
-            "dateOfBirth",
-            "maritalStatus",
-            "occupation",
-            "email",
-            "phone",
-            "streetAddress",
-            "city",
-            "country",
-            "preferredContact",
-          ].includes(key),
-      ),
-      icon: <Icons.folder className="h-5 w-5" />,
+      keys: clientAnswers
+        ? Object.keys(clientAnswers).filter(
+            (key) => ![...personalInfoKeys, ...contactInfoKeys].includes(key),
+          )
+        : [],
+      icon: <Icons.folder className="size-5" />,
     },
   ];
 
   const renderCategory = (category: CategoryConfig) => {
+    if (!clientAnswers) return null;
+
     const relevantAnswers = category.keys.reduce(
       (acc, key) => {
         if (key in clientAnswers) {
@@ -102,9 +97,13 @@ export function TrustAnswersDisplay({
     );
   };
 
+  if (!clientAnswers) {
+    return <div>No answers available.</div>;
+  }
+
   return (
     <div className="space-y-6">
-      <h3 className="text-lg font-semibold">Client's Answers</h3>
+      <h3 className="text-lg font-semibold">Client`s Answers</h3>
       {categories.map(renderCategory)}
     </div>
   );

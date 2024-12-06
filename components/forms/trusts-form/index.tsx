@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { createTrust } from "@/actions/trusts/create-trust";
+import { updateTrust } from "@/actions/trusts/update-trust";
 import { submitTrustAnswers } from "@/actions/user/update-trust-answer";
 import { ChevronRight, Loader2 } from "lucide-react";
 
@@ -66,7 +68,7 @@ export function TrustForm({
     );
   };
 
-  const handleSubmit = async () => {
+  async function handleSubmit() {
     if (!isStepValid()) {
       toast({
         title: "Validation Error",
@@ -75,27 +77,52 @@ export function TrustForm({
       });
       return;
     }
+
     if (currentStep === steps.length - 1) {
       try {
         setIsSubmitting(true);
 
-        await submitTrustAnswers({
-          trustId: trustId,
-          clientAnswers: formData,
-        });
+        let result: any;
+        if (mode === "create") {
+          result = await submitTrustAnswers({
+            trustId: trustId,
+            clientAnswers: formData,
+          });
+        } else {
+          result = await updateTrust({
+            trustId: trustId,
+            name: formData.name,
+            type: formData.type,
+            clientAnswers: formData,
+          });
 
-        setFormData({});
-        setCurrentStep(0);
+          console.log("RESULT:::::::::", result);
+        }
 
-        navigation.refresh();
+        if (result.status === "success") {
+          toast({
+            title: "Success",
+            description: `Trust ${mode === "create" ? "created" : "updated"} successfully!`,
+          });
 
-        navigation.replace(`/dashboard/trusts/${trustId}`);
+          navigation.refresh();
+          navigation.replace(`/dashboard/trusts/${trustId}`);
+
+          setFormData({});
+          // setCurrentStep(0);
+        } else {
+          throw new Error("Operation failed");
+        }
       } catch (error) {
-        console.error("Error submitting form:", error);
+        console.error(
+          `Error ${mode === "create" ? "creating" : "updating"} trust:`,
+          error,
+        );
         toast({
           title: "Error",
           description:
-            error.message || "Something went wrong. Please try again.",
+            error.message ||
+            `Something went wrong while ${mode === "create" ? "creating" : "updating"} the trust. Please try again.`,
           variant: "destructive",
         });
       } finally {
@@ -104,7 +131,7 @@ export function TrustForm({
     } else {
       setCurrentStep((prev) => prev + 1);
     }
-  };
+  }
 
   const renderField = (field: FormField) => {
     const commonProps = {

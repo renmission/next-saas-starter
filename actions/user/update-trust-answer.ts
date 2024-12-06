@@ -43,7 +43,7 @@ export async function submitTrustAnswers(input: SubmitTrustAnswersInput) {
       ...input.clientAnswers,
     };
 
-    const updatedTrust = await prisma.trust.update({
+    const result = await prisma.trust.update({
       where: {
         id: input.trustId,
       },
@@ -55,7 +55,7 @@ export async function submitTrustAnswers(input: SubmitTrustAnswersInput) {
 
     revalidatePath("/dashboard/trusts");
 
-    return updatedTrust;
+    return { status: "success", data: result };
   } catch (error) {
     console.error(error);
     return null;

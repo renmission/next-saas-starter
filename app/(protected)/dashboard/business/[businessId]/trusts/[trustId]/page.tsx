@@ -3,11 +3,14 @@ import { getTrustById } from "@/actions/trusts/get-trust";
 
 import { getCurrentUser } from "@/lib/session";
 import { TrustForm } from "@/components/forms/trusts-form";
+import { TrustInfoDisplay } from "@/components/trusts/trust-info";
 
-export default async function FormPage({
+export default async function TrustPage({
   params,
+  searchParams,
 }: {
   params: { trustId: string };
+  searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const user = await getCurrentUser();
 
@@ -17,6 +20,9 @@ export default async function FormPage({
 
   if (!trust) redirect("/dashboard/business");
 
+  const isEditMode = searchParams.mode === "edit";
+  const isAnswerMode = trust.status === "PENDING" && user.role === "CLIENT";
+
   const trustFormSteps = Array.isArray(trust.documents)
     ? trust.documents.map((doc: any) => ({
         title: doc.title,
@@ -25,13 +31,32 @@ export default async function FormPage({
       }))
     : [];
 
-  return (
-    <>
-      <TrustForm
-        steps={trustFormSteps}
-        trustId={params.trustId}
-        mode="create"
-      />
-    </>
-  );
+  if (isEditMode) {
+    return (
+      <>
+        <h1 className="mb-4 text-2xl font-bold">Edit Trust</h1>
+        <TrustForm
+          steps={trustFormSteps}
+          trustId={params.trustId}
+          existingData={trust.clientAnswers as Record<string, any>}
+          mode="edit"
+        />
+      </>
+    );
+  } else if (isAnswerMode) {
+    return (
+      <>
+        <h1 className="mb-4 text-2xl font-bold">
+          Answer Questions: {trust.name}
+        </h1>
+        <TrustForm
+          steps={trustFormSteps}
+          trustId={params.trustId}
+          mode="create"
+        />
+      </>
+    );
+  }
+  // View mode
+  return <TrustInfoDisplay trust={trust} />;
 }
