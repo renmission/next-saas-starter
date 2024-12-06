@@ -1,10 +1,11 @@
-import { redirect } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 import { getClientTrusts } from "@/actions/trusts/get-trust";
 import { Trust } from "@/types";
 
 import { getCurrentUser } from "@/lib/session";
 import { getFirstName } from "@/lib/utils";
 import { DashboardHeader } from "@/components/dashboard/header";
+import AddTrustButton from "@/components/trusts/create-button";
 import { TrustCard } from "@/components/trusts/trust-card";
 
 export default async function trustPage() {
@@ -16,30 +17,25 @@ export default async function trustPage() {
 
   const trusts = await getClientTrusts();
 
-  console.log("Trusts:", trusts);
-
   return (
     <>
-      <DashboardHeader
-        heading={`Hello ${firstName},`}
-        text="Welcome back!, Below are the list of your trust."
-      />
+      <div className="flex flex-row items-center justify-between">
+        <DashboardHeader
+          heading={`Hello ${firstName},`}
+          text="Welcome back!, Below are the list of your trust."
+        />
+        {trusts.length && (
+          <AddTrustButton
+            businessId={trusts[0].businessId}
+            clientId={user.id}
+          />
+        )}
+      </div>
 
       <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2">
         {trusts.length ? (
           trusts.map((trust: Trust) => (
-            <TrustCard
-              key={trust.id}
-              id={trust.id}
-              name={trust.name}
-              type={trust.type}
-              status={trust.status}
-              documents={trust.documents}
-              createdAt={trust.createdAt}
-              updatedAt={trust.updatedAt}
-              businessId={trust.businessId}
-              professional={trust.professional}
-            />
+            <TrustCard key={trust.id} {...trust} userRole={user.role} />
           ))
         ) : (
           <p className="text-sm text-muted-foreground">No trusts found.</p>

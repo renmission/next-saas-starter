@@ -68,6 +68,9 @@ export async function getTrustByBusinessId(businessId: string) {
           },
         },
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return trust;
@@ -107,6 +110,9 @@ export async function getClientTrusts() {
             email: true,
           },
         },
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
 

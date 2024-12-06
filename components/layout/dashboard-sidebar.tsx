@@ -21,6 +21,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Copyright } from "@/components/dashboard/copyright";
 import { UpgradeCard } from "@/components/dashboard/upgrade-card";
 // import ProjectSwitcher from "@/components/dashboard/practice-switcher";
 import { Icons } from "@/components/shared/icons";
@@ -186,6 +187,7 @@ export function DashboardSidebar({ links }: DashboardSidebarProps) {
                 ))}
               </nav>
               {/* <UpgradeCard /> */}
+              <Copyright />
             </div>
           </aside>
         </ScrollArea>

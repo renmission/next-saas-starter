@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { updateTrustAnswers } from "@/actions/user/update-trust-answer";
+import { submitTrustAnswers } from "@/actions/user/update-trust-answer";
 import { ChevronRight, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -25,22 +25,32 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import { DatePicker } from "@/components/shared/date-picker";
 
 import { FormField, FormStep } from "./types";
 
-interface MultiStepFormProps {
+interface TrustFormProps {
   steps: FormStep[];
   trustId: string;
+  existingData?: Record<string, any>;
+  mode: "edit" | "create";
 }
 
-export function MultiStepForm({ steps, trustId }: MultiStepFormProps) {
+export function TrustForm({
+  steps,
+  trustId,
+  existingData,
+  mode,
+}: TrustFormProps) {
   const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState<Record<string, any>>({});
+  const [formData, setFormData] = useState<Record<string, any>>(
+    existingData || {},
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigation = useRouter();
 
-  const handleInputChange = (name: string, value: string) => {
+  const handleInputChange = (name: string, value: any) => {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -69,7 +79,7 @@ export function MultiStepForm({ steps, trustId }: MultiStepFormProps) {
       try {
         setIsSubmitting(true);
 
-        await updateTrustAnswers({
+        await submitTrustAnswers({
           trustId: trustId,
           clientAnswers: formData,
         });
@@ -131,6 +141,18 @@ export function MultiStepForm({ steps, trustId }: MultiStepFormProps) {
             value={formData[field.name] || ""}
             onChange={(e) => handleInputChange(field.name, e.target.value)}
             className="min-h-[100px]"
+          />
+        );
+
+      case "date":
+        return (
+          <DatePicker
+            date={
+              formData[field.name] ? new Date(formData[field.name]) : undefined
+            }
+            setDate={(date) =>
+              handleInputChange(field.name, date ? date.toISOString() : "")
+            }
           />
         );
 

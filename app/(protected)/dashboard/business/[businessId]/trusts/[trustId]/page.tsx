@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { getTrustById } from "@/actions/trusts/get-trust";
 
 import { getCurrentUser } from "@/lib/session";
-import { MultiStepForm } from "@/components/forms/trusts-form";
+import { TrustForm } from "@/components/forms/trusts-form";
 
 export default async function FormPage({
   params,
@@ -27,7 +27,11 @@ export default async function FormPage({
 
   return (
     <>
-      <MultiStepForm steps={trustFormSteps} trustId={params.trustId} />
+      <TrustForm
+        steps={trustFormSteps}
+        trustId={params.trustId}
+        mode="create"
+      />
     </>
   );
 }

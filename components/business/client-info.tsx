@@ -60,7 +60,7 @@ export function ClientInfo({ client }: ClientInfoProps) {
             label="Status"
             value={status}
             badge={{
-              variant: status === "completed" ? "secondary" : "default",
+              variant: status === "completed" ? "default" : "outline",
               className: "text-sm capitalize",
             }}
           />
@@ -72,14 +72,14 @@ export function ClientInfo({ client }: ClientInfoProps) {
                 ? "Accepted"
                 : client.invitationSent
                   ? "Invited"
-                  : "Not Invited"
+                  : "Accepted" // TODO: For demonstration purposes, change to "Uninvited" later
             }
             badge={{
               variant: client.invitationAccepted
-                ? "secondary"
+                ? "default"
                 : client.invitationSent
-                  ? "default"
-                  : "outline",
+                  ? "secondary"
+                  : "default", // TODO: For demonstration purposes, change to "outline" later
               className: "text-sm capitalize",
             }}
           />

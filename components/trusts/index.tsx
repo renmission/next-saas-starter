@@ -14,5 +14,5 @@ export async function Trusts({ client }: { client: string }) {
 
   const result = await getTrustByBusinessId(client);
   const trust: Trust[] = result ?? [];
-  return <TrustWrapper initialData={trust} />;
+  return <TrustWrapper initialData={trust} userRole={user.role} />;
 }

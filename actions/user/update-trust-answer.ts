@@ -6,12 +6,12 @@ import { TrustStatus } from "@prisma/client";
 
 import { prisma } from "@/lib/db";
 
-interface UpdateTrustAnswersInput {
+interface SubmitTrustAnswersInput {
   trustId: string;
   clientAnswers: Record<string, any>;
 }
 
-export async function updateTrustAnswers(input: UpdateTrustAnswersInput) {
+export async function submitTrustAnswers(input: SubmitTrustAnswersInput) {
   try {
     const session = await auth();
 
@@ -23,7 +23,11 @@ export async function updateTrustAnswers(input: UpdateTrustAnswersInput) {
       where: {
         id: input.trustId,
       },
-      select: { clientId: true, documents: true, clientAnswers: true },
+      select: {
+        clientId: true,
+        documents: true,
+        clientAnswers: true,
+      },
     });
 
     if (!trust) {
@@ -31,7 +35,7 @@ export async function updateTrustAnswers(input: UpdateTrustAnswersInput) {
     }
 
     if (trust.clientId !== session.user.id) {
-      throw new Error("You are not authorized to update this trust");
+      throw new Error("You are not authorized to submit this trust");
     }
 
     const updatedAnswers = {

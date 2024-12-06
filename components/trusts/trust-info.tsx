@@ -1,12 +1,13 @@
+import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { Icons } from "@/components/shared/icons";
 import { PrintButton } from "@/components/shared/print-button";
 
 import { TrustAnswersDisplay } from "./trust-answer";
+import { TrustProgress } from "./trust-progress";
 
 interface TrustInfoDisplayProps {
   trust: Record<string, any>;
@@ -14,29 +15,6 @@ interface TrustInfoDisplayProps {
 }
 
 export function TrustInfoDisplay({ trust, onEdit }: TrustInfoDisplayProps) {
-  const formatDate = (date: string | Date) => {
-    return new Date(date).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
-  const getProgressPercentage = (status: string) => {
-    switch (status) {
-      case "PENDING":
-        return 25;
-      case "IN_PROGRESS":
-        return 50;
-      case "COMPLETED":
-        return 100;
-      default:
-        return 0;
-    }
-  };
-
   return (
     <Card className="mx-auto w-full max-w-7xl print:border-none print:shadow-none">
       <CardHeader className="border-b print:border-none">
@@ -116,11 +94,7 @@ export function TrustInfoDisplay({ trust, onEdit }: TrustInfoDisplayProps) {
           <Separator className="print:hidden" />
 
           <section className="print:hidden">
-            <h3 className="mb-2 text-lg font-semibold">Trust Progress</h3>
-            <Progress
-              value={getProgressPercentage(trust.status)}
-              className="w-full"
-            />
+            <TrustProgress status={trust.status} />
           </section>
 
           <Separator className="print:hidden" />

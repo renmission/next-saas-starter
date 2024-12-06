@@ -8,7 +8,8 @@ export interface FormField {
     | "password"
     | "select"
     | "checkbox"
-    | "textarea";
+    | "textarea"
+    | "date";
   placeholder?: string;
   options?: { value: string; label: string }[];
   required?: boolean;

@@ -7,8 +7,15 @@ import { useCreateTrustModal } from "@/components/modals/trusts/create-trust-mod
 
 import { Icons } from "../shared/icons";
 
-const AddTrustButton = () => {
-  const { setShowCreateTrustModal, CreateTrustModal } = useCreateTrustModal();
+interface AddTrustButtonProps {
+  businessId: string;
+}
+
+const AddTrustButton = ({ businessId, clientId }) => {
+  const { setShowCreateTrustModal, CreateTrustModal } = useCreateTrustModal({
+    businessId,
+    clientId,
+  });
 
   return (
     <>

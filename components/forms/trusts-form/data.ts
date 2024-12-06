@@ -22,7 +22,7 @@ export const nevadaDynastyTrustQuestions: FormStep[] = [
       {
         name: "dateOfBirth",
         label: "Date of Birth",
-        type: "text",
+        type: "date",
         placeholder: "MM/DD/YYYY",
         required: true,
       },
@@ -271,7 +271,7 @@ export const nevadaAssetProtectionTrustQuestions: FormStep[] = [
       {
         name: "dateOfBirth",
         label: "Date of Birth",
-        type: "text",
+        type: "date",
         placeholder: "MM/DD/YYYY",
         required: true,
       },

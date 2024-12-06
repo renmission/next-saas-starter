@@ -26,14 +26,21 @@ import { Icons } from "@/components/shared/icons";
 function CreateTrustModal({
   showCreateTrustModal,
   setShowCreateTrustModal,
+  businessId,
+  clientId,
 }: {
   showCreateTrustModal: boolean;
   setShowCreateTrustModal: Dispatch<SetStateAction<boolean>>;
+  businessId: string;
+  clientId: string;
 }) {
   const { data: session } = useSession();
   const [creating, setCreating] = useState(false);
   const [selectedTrust, setSelectedTrust] = useState<TrustType | null>(null);
   const params = useParams();
+
+  console.log("BUSINESS ID:", businessId);
+  console.log("CLIENT ID:", clientId);
 
   async function handleTrustCreation() {
     if (!selectedTrust) return;
@@ -46,8 +53,8 @@ function CreateTrustModal({
       const result = await createTrust({
         name: formatTrustName(selectedTrust),
         type: selectedTrust,
-        clientId: params.clientId as string,
-        businessId: params.businessId as string,
+        businessId: businessId || (params.businessId as string),
+        clientId: clientId || (params.clientId as string),
       });
 
       if (result.status === "success") {
@@ -137,7 +144,7 @@ function CreateTrustModal({
   );
 }
 
-export function useCreateTrustModal() {
+export function useCreateTrustModal({ businessId, clientId }) {
   const [showCreateTrustModal, setShowCreateTrustModal] = useState(false);
 
   const CreateTrustModalCallback = useCallback(() => {
@@ -145,9 +152,11 @@ export function useCreateTrustModal() {
       <CreateTrustModal
         showCreateTrustModal={showCreateTrustModal}
         setShowCreateTrustModal={setShowCreateTrustModal}
+        businessId={businessId}
+        clientId={clientId}
       />
     );
-  }, [showCreateTrustModal, setShowCreateTrustModal]);
+  }, [showCreateTrustModal, setShowCreateTrustModal, businessId, clientId]);
 
   return useMemo(
     () => ({

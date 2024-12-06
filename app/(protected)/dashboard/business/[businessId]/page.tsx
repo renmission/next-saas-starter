@@ -22,6 +22,8 @@ export default async function ClientPage({
 
   if (!client) redirect("/dashboard/business/clients");
 
+  const isUserClientID = user.role === "CLIENT" ? user.id : client.ownerId;
+
   return (
     <>
       <div className="flex flex-col justify-between gap-6 md:flex-row">
@@ -30,7 +32,10 @@ export default async function ClientPage({
           text="Manage your client"
         />
         <div className="flex items-center gap-4">
-          <AddTrustButton />
+          <AddTrustButton
+            businessId={params.businessId}
+            clientId={isUserClientID}
+          />
           <InviteClientButton />
         </div>
       </div>

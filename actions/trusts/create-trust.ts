@@ -31,8 +31,8 @@ export async function createTrust(data: CreateTrustInput) {
     const documentsJson = JSON.parse(JSON.stringify(docs));
 
     // Testing Purpose
-    const clientId = "cm3svrwvu0006ewnpx3i9fv0r";
-    data.clientId = clientId;
+    // const clientId = "cm3svrwvu0006ewnpx3i9fv0r";
+    // data.clientId = clientId;
 
     const newTrust = await prisma.trust.create({
       data: {
@@ -63,7 +63,6 @@ export async function createTrust(data: CreateTrustInput) {
     return { status: "success", trust: newTrust };
   } catch (error) {
     console.error("ERROR", error);
-    console.error("MESSAGE::::::", error.message);
     throw error;
   }
 }
