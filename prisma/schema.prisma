@@ -34,7 +34,7 @@ model ClientInvitation {
 
   @@index([businessId])
   @@index([inviterId])
-  @@map(name: "invitation")
+  @@map(name: "invitations")
 }
 
 model Form {
