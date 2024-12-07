@@ -21,17 +21,19 @@ enum TrustType {
   NEVADA_DYNASTY_TRUST
 }
 
-model Invitation {
-  id        String  @id @default(cuid())
-  email     String
+model ClientInvitation {
+  id         String   @id @default(cuid())
+  email      String
+  token      String   @unique
   businessId String
-  business Business @relation(fields: [businessId], references: [id])
-  status    String @default("pending")
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @default(now()) @map(name: "updated_at")
+  business   Business @relation(fields: [businessId], references: [id])
+  inviterId  String
+  inviter    User     @relation(fields: [inviterId], references: [id])
+  createdAt  DateTime @default(now())
+  expiresAt  DateTime @default(dbgenerated("(NOW() + INTERVAL '7 days')"))
 
   @@index([businessId])
-  @@map(name: "invitations")
+  @@index([inviterId])
 }
 
 model Form {
@@ -91,10 +93,11 @@ model Business {
 
   trusts   Trust[]
   clients    User[]
-  invitations Invitation[]
   forms      Form[]
 
   trustPayments TrustPayment[]
+
+  clientInvitations ClientInvitation[]
 
   @@map(name: "businesses")
 }
@@ -201,8 +204,8 @@ model User {
   trustPayments TrustPayment[]
 
 
-  businessid    String?
-  business      Business? @relation(fields: [businessid], references: [id])
+  businessId    String?
+  business      Business? @relation(fields: [businessId], references: [id])
 
   ownedBusinesses Business[] @relation("OwnedBusinesses")
 
@@ -223,6 +226,8 @@ model User {
   formResponses FormResponse[] @relation("FormRespondent")
 
   isActive Boolean @default(true)
+
+  clientInvitations ClientInvitation[]
 
   @@map(name: "users")
 }
