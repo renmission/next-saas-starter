@@ -7,6 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { sendClientInvite } from "@/actions/business/send-client-invite";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 
@@ -15,15 +16,14 @@ import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { Icons } from "@/components/shared/icons";
 
-// TODO: Import the actual function to send client invite
-// import { sendClientInvite } from "@/actions/invite-client";
-
 function InviteClientModal({
   showInviteClientModal,
   setShowInviteClientModal,
+  businessId,
 }: {
   showInviteClientModal: boolean;
   setShowInviteClientModal: Dispatch<SetStateAction<boolean>>;
+  businessId: string;
 }) {
   const { data: session } = useSession();
   const [sending, setSending] = useState(false);
@@ -35,12 +35,10 @@ function InviteClientModal({
       if (!session?.user?.id) {
         throw new Error("User not authenticated.");
       }
-      // TODO: Implement the actual invite sending logic
-      // const result = await sendClientInvite({
-      //   email: clientEmail,
-      //   inviterId: session.user.id,
-      // });
-      const result = true; // Mocked result for now
+      const result = await sendClientInvite({
+        email: clientEmail,
+        businessId,
+      });
       if (result) {
         setShowInviteClientModal(false);
       } else {
@@ -116,7 +114,7 @@ function InviteClientModal({
   );
 }
 
-export function useInviteClientModal() {
+export function useInviteClientModal({ businessId }) {
   const [showInviteClientModal, setShowInviteClientModal] = useState(false);
 
   const InviteClientModalCallback = useCallback(() => {
@@ -124,9 +122,10 @@ export function useInviteClientModal() {
       <InviteClientModal
         showInviteClientModal={showInviteClientModal}
         setShowInviteClientModal={setShowInviteClientModal}
+        businessId={businessId} // Pass business ID as prop to the modal component for dynamic selection of clients.
       />
     );
-  }, [showInviteClientModal, setShowInviteClientModal]);
+  }, [showInviteClientModal, setShowInviteClientModal, businessId]);
 
   return useMemo(
     () => ({

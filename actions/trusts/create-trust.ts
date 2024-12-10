@@ -3,17 +3,20 @@
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { TrustStatus, TrustType } from "@prisma/client";
+import Stripe from "stripe";
 
 import { prisma } from "@/lib/db";
 import { getTrustQuestionsByTrustType } from "@/components/forms/trusts-form/data";
 
 import { createTrustPayment } from "../stripe/stripe-trust-payment";
+import { getUserById } from "../user/get-user";
 
 interface CreateTrustInput {
   name: string;
   type: TrustType;
-  clientId?: string;
+  clientId?: string | null;
   businessId: string;
+  payment: Stripe.Checkout.Session;
 }
 
 export async function createTrust(data: CreateTrustInput) {
@@ -29,26 +32,17 @@ export async function createTrust(data: CreateTrustInput) {
       throw new Error("Business ID is required");
     }
 
-    // if (!payment.paymentId) {
-    //   throw new Error("Payment ID is required");
-    // }
-
-    // const isPaymentExists = await prisma.trustPayment.findUnique({
-    //   where: { id: payment.paymentId, status: "completed" },
-    // });
-
-    // if (!isPaymentExists) {
-    //   throw new Error("Payment not found or not completed");
-    // }
-
     const docs = getTrustQuestionsByTrustType(data.type as any);
 
     const documentsJson = JSON.parse(JSON.stringify(docs));
 
-    // Testing Purpose
-    const clientId = "cm49w4w0i0006ds56gs6ya3h5";
-    data.clientId = clientId;
+    // clientId is for testing Purpose | clientId is not required on creating businesses.
+    // const clientId = "cm4hmxqsc000013j8dunt9j7k";
+    // const client = await prisma.trust.findUnique({ where: { id: clientId } });
+    // data.clientId = !client ? clientId : "";
 
+    // TODO: Create condition if clientId is provided else just create trust with no client.
+    // TODO: clientId is not required on creating businesses or trusts.
     const newTrust = await prisma.trust.create({
       data: {
         name: data.name,
@@ -65,14 +59,9 @@ export async function createTrust(data: CreateTrustInput) {
             id: session.user.id,
           },
         },
-        client: {
-          connect: {
-            id: data.clientId,
-          },
-        },
-        // payment: {
+        // client: {
         //   connect: {
-        //     id: payment.paymentId,
+        //     id: data.clientId,
         //   },
         // },
       },

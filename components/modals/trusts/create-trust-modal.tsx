@@ -40,9 +40,6 @@ function CreateTrustModal({
   const [selectedTrust, setSelectedTrust] = useState<TrustType | null>(null);
   const params = useParams();
 
-  console.log("BUSINESS ID:", businessId);
-  console.log("CLIENT ID:", clientId);
-
   async function handleTrustCreation() {
     if (!selectedTrust) return;
 
@@ -52,14 +49,12 @@ function CreateTrustModal({
         throw new Error("User not authenticated.");
       }
       const stripeSession = await createTrustPayment(businessId);
-      console.log("stripeSession:::::::::::::::::::::::::::::::::::::");
-      console.log("stripeSession:::::::::::::::::::::", stripeSession);
-      console.log("stripeSession:::::::::::::::::::::::::::::::::::::");
       const result = await createTrust({
         name: formatTrustName(selectedTrust),
         type: selectedTrust,
         businessId: businessId || (params.businessId as string),
         clientId: clientId || (params.clientId as string),
+        payment: stripeSession as any,
       });
 
       if (result.status === "success") {

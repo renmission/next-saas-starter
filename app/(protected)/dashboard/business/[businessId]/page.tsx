@@ -36,7 +36,7 @@ export default async function ClientPage({
             businessId={params.businessId}
             clientId={isUserClientID}
           />
-          <InviteClientButton />
+          <InviteClientButton businessId={params.businessId} />
         </div>
       </div>
 
