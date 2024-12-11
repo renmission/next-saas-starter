@@ -1,5 +1,7 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import { getUserById } from "@/actions/user/get-user";
 import { Trust } from "@/types";
 import { UserRole } from "@prisma/client";
 
@@ -30,8 +32,7 @@ export async function TrustCard({
   isCreatedByClient,
   client,
 }: TrustCardProps) {
-  console.log("isCreatedByClient::::::::::::::::::::::", isCreatedByClient);
-  console.log("CLIENT::::::::::::::::::::::", client);
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <Card className="w-full transition-all hover:shadow-md">
       <CardHeader className="pb-3">
@@ -69,7 +70,13 @@ export async function TrustCard({
       </CardContent>
       <CardFooter className="flex flex-col items-stretch justify-end gap-2 border-t pt-4 sm:flex-row">
         {status === "IN_PROGRESS" && userRole === "CLIENT" && (
-          <Button variant="outline" size="sm" className="w-full sm:w-auto">
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full sm:w-auto"
+            disabled={isLoading}
+            onClick={() => setIsLoading(true)}
+          >
             <Link
               href={`/dashboard/business/${businessId}/trusts/${id}?mode=edit`}
               className="flex w-full items-center justify-center"
@@ -86,34 +93,60 @@ export async function TrustCard({
               href={`/dashboard/trusts/${id}`}
               className="flex w-full items-center justify-center"
             >
-              <Icons.externalLink className="mr-2 size-4 text-blue-700" />
-              View Documents
+              {isLoading ? (
+                <>
+                  <Icons.spinner className="mr-2 size-4 animate-spin" />
+                  Waiting...
+                </>
+              ) : (
+                <>
+                  <Icons.externalLink className="mr-2 size-4 text-blue-700" />
+                  View Documents
+                </>
+              )}
             </Link>
           </Button>
         )}
 
         {status === "PENDING" && userRole === "CLIENT" && (
-          <Button variant="outline" size="sm" className="w-full sm:w-auto">
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full sm:w-auto"
+            disabled={isLoading}
+            onClick={() => setIsLoading(true)}
+          >
             <Link
               href={`/dashboard/business/${businessId}/trusts/${id}`}
               className="flex w-full items-center justify-center"
             >
-              <Icons.folderUp className="mr-2 size-4 text-blue-700" />
-              Answer Questions
+              {isLoading ? (
+                <>
+                  <Icons.spinner className="mr-2 size-4 animate-spin" />
+                  Waiting...
+                </>
+              ) : (
+                <>
+                  <Icons.folderUp className="mr-2 size-4 text-blue-700" />
+                  Answer Questions
+                </>
+              )}
             </Link>
           </Button>
         )}
 
         {status === "PENDING" && userRole === "PROFESSIONAL" && (
           <Button
-            disabled
             variant="outline"
             size="sm"
             className="disabled w-full cursor-not-allowed sm:w-auto"
+            disabled
           >
             <Link href="#" className="flex w-full items-center justify-center">
-              <Icons.clock className="mr-2 size-4 text-blue-700" />
-              Waiting for client to answer
+              <>
+                <Icons.clock className="mr-2 size-4 text-blue-700" />
+                Waiting for client to answer
+              </>
             </Link>
           </Button>
         )}
