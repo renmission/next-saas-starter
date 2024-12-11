@@ -137,7 +137,8 @@ export interface Trust {
   status: string;
   createdAt: Date;
   updatedAt: Date;
-  // clientId?: string;
+  isCreatedByClient?: boolean;
+  client?: any;
   businessId: string;
   professional: {
     email: string | null;
@@ -177,4 +178,11 @@ export enum TrustStatus {
   IN_PROGRESS = "IN_PROGRESS",
   ARCHIVED = "ARCHIVED",
   COMPLETED = "COMPLETED",
+}
+
+export enum UserRole {
+  ADMIN = "ADMIN",
+  CLIENT = "CLIENT",
+  PROFESSIONAL = "PROFESSIONAL",
+  // SUPER_ADMIN = "SUPER_ADMIN",
 }

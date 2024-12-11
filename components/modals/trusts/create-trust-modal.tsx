@@ -53,8 +53,8 @@ function CreateTrustModal({
         name: formatTrustName(selectedTrust),
         type: selectedTrust,
         businessId: businessId || (params.businessId as string),
-        clientId: clientId || (params.clientId as string),
-        payment: stripeSession as any,
+        // clientId: clientId || (params.clientId as string),
+        // payment: stripeSession as any,
       });
 
       if (result.status === "success") {

@@ -61,6 +61,8 @@ export async function getTrustByBusinessId(businessId: string) {
         createdAt: true,
         updatedAt: true,
         businessId: true,
+        client: true,
+        isCreatedByClient: true,
         professional: {
           select: {
             name: true,
@@ -104,6 +106,8 @@ export async function getClientTrusts() {
         createdAt: true,
         updatedAt: true,
         businessId: true,
+        client: true,
+        isCreatedByClient: true,
         professional: {
           select: {
             name: true,

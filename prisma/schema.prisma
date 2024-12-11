@@ -152,6 +152,8 @@ model Trust {
 
   payment        TrustPayment?
 
+  isCreatedByClient    Boolean @default(false)
+
   @@index([businessId])
   @@index([clientId])
   @@index([professionalId])

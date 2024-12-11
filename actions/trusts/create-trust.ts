@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
-import { TrustStatus, TrustType } from "@prisma/client";
+import { TrustStatus, TrustType, UserRole } from "@prisma/client";
 import Stripe from "stripe";
 
 import { prisma } from "@/lib/db";
@@ -16,7 +16,7 @@ interface CreateTrustInput {
   type: TrustType;
   clientId?: string | null;
   businessId: string;
-  payment: Stripe.Checkout.Session;
+  // payment: Stripe.Checkout.Session;
 }
 
 export async function createTrust(data: CreateTrustInput) {
@@ -33,39 +33,41 @@ export async function createTrust(data: CreateTrustInput) {
     }
 
     const docs = getTrustQuestionsByTrustType(data.type as any);
-
     const documentsJson = JSON.parse(JSON.stringify(docs));
 
-    // clientId is for testing Purpose | clientId is not required on creating businesses.
-    // const clientId = "cm4hmxqsc000013j8dunt9j7k";
-    // const client = await prisma.trust.findUnique({ where: { id: clientId } });
-    // data.clientId = !client ? clientId : "";
-
-    // TODO: Create condition if clientId is provided else just create trust with no client.
-    // TODO: clientId is not required on creating businesses or trusts.
-    const newTrust = await prisma.trust.create({
-      data: {
-        name: data.name,
-        type: data.type,
-        status: TrustStatus.PENDING,
-        documents: documentsJson,
-        business: {
-          connect: {
-            id: data.businessId,
-          },
+    let trustData: any = {
+      name: data.name,
+      type: data.type,
+      status: TrustStatus.PENDING,
+      documents: documentsJson,
+      business: {
+        connect: {
+          id: data.businessId,
         },
-        professional: {
-          connect: {
-            id: session.user.id,
-          },
-        },
-        // client: {
-        //   connect: {
-        //     id: data.clientId,
-        //   },
-        // },
       },
-    });
+    };
+
+    if (user.role === UserRole.CLIENT) {
+      const business = await prisma.business.findFirst({
+        where: { id: data.businessId },
+        select: { ownerId: true },
+      });
+      if (!business) {
+        throw new Error("Professional not found for the provided business ID");
+      }
+      trustData.client = { connect: { id: user.id } };
+      trustData.professional = { connect: { id: business.ownerId } };
+      trustData.isCreatedByClient = true;
+    } else if (user.role === UserRole.PROFESSIONAL) {
+      trustData.professional = { connect: { id: user.id } };
+      if (data.clientId) {
+        trustData.client = { connect: { id: data.clientId } };
+      }
+    } else {
+      throw new Error("Unauthorized: User role is required");
+    }
+
+    const newTrust = await prisma.trust.create({ data: trustData });
 
     revalidatePath("/dashboard/business");
 

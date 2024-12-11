@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getUserById } from "@/actions/user/get-user";
 import { Trust } from "@/types";
 import { UserRole } from "@prisma/client";
 
@@ -26,7 +27,11 @@ export async function TrustCard({
   status,
   professional,
   userRole,
+  isCreatedByClient,
+  client,
 }: TrustCardProps) {
+  console.log("isCreatedByClient::::::::::::::::::::::", isCreatedByClient);
+  console.log("CLIENT::::::::::::::::::::::", client);
   return (
     <Card className="w-full transition-all hover:shadow-md">
       <CardHeader className="pb-3">
@@ -50,7 +55,11 @@ export async function TrustCard({
           <IconsItem
             icon={<Icons.user className="h-5 w-5 text-blue-700" />}
             label="Created By"
-            value={professional.name as string}
+            value={
+              isCreatedByClient && client
+                ? (client.name as string)
+                : (professional.name as string)
+            }
             badge={{
               variant: "outline",
               className: "text-sm capitalize",
