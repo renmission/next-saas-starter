@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { User, UserRole } from "@prisma/client";
 import { JsonValue } from "@prisma/client/runtime/library";
 import type { Icon } from "lucide-react";
 
@@ -15,6 +15,13 @@ export type SiteConfig = {
     github: string;
   };
 };
+
+// export enum UserRole {
+//   ADMIN = "ADMIN",
+//   CLIENT = "CLIENT",
+//   PROFESSIONAL = "PROFESSIONAL",
+//   // SUPER_ADMIN = "SUPER_ADMIN",
+// }
 
 export type NavItem = {
   title: string;
@@ -178,11 +185,4 @@ export enum TrustStatus {
   IN_PROGRESS = "IN_PROGRESS",
   ARCHIVED = "ARCHIVED",
   COMPLETED = "COMPLETED",
-}
-
-export enum UserRole {
-  ADMIN = "ADMIN",
-  CLIENT = "CLIENT",
-  PROFESSIONAL = "PROFESSIONAL",
-  // SUPER_ADMIN = "SUPER_ADMIN",
 }
