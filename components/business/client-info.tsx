@@ -25,7 +25,7 @@ export function ClientInfo({ client }: ClientInfoProps) {
       <CardHeader className="text-white">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center space-x-4">
-            <Avatar className="h-12 w-12 border-2 border-white">
+            <Avatar className="size-12 border-2 border-white">
               <AvatarImage
                 src={`https://avatar.vercel.sh/${id}.png`}
                 alt={name}
@@ -47,7 +47,7 @@ export function ClientInfo({ client }: ClientInfoProps) {
       <CardContent className="border-t p-6">
         <div className="grid-col-1 md:grid-col-2 grid gap-6 lg:grid-cols-3">
           <IconsItem
-            icon={<Icons.flag className="h-5 w-5 text-blue-700" />}
+            icon={<Icons.flag className="size-5 text-blue-700" />}
             label="Priority"
             value={priority}
             badge={{
@@ -56,7 +56,7 @@ export function ClientInfo({ client }: ClientInfoProps) {
             }}
           />
           <IconsItem
-            icon={<Icons.circleCheck className="h-5 w-5 text-blue-700" />}
+            icon={<Icons.circleCheck className="size-5 text-blue-700" />}
             label="Status"
             value={status}
             badge={{
@@ -65,7 +65,7 @@ export function ClientInfo({ client }: ClientInfoProps) {
             }}
           />
           <IconsItem
-            icon={<Icons.mail className="h-5 w-5 text-blue-700" />}
+            icon={<Icons.mail className="size-5 text-blue-700" />}
             label="Invitation"
             value={
               client.invitationAccepted

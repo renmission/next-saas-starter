@@ -45,7 +45,7 @@ export async function TrustCard({
       <CardContent>
         <div className="flex flex-col space-y-2 text-sm text-muted-foreground sm:space-y-2">
           <IconsItem
-            icon={<Icons.calendar className="h-5 w-5 text-blue-700" />}
+            icon={<Icons.calendar className="size-5 text-blue-700" />}
             label="Created Date"
             value={formatDate(createdAt)}
             badge={{
@@ -54,7 +54,7 @@ export async function TrustCard({
             }}
           />
           <IconsItem
-            icon={<Icons.user className="h-5 w-5 text-blue-700" />}
+            icon={<Icons.user className="size-5 text-blue-700" />}
             label="Created By"
             value={
               isCreatedByClient && client

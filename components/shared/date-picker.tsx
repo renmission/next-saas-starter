@@ -65,7 +65,7 @@ export function DatePicker({ date, setDate }: DatePickerProps) {
             !date && "text-muted-foreground",
           )}
         >
-          <CalendarIcon className="mr-2 h-4 w-4" />
+          <CalendarIcon className="mr-2 size-4" />
           {date ? format(date, "PPP") : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
@@ -121,7 +121,7 @@ export function DatePicker({ date, setDate }: DatePickerProps) {
             caption_label: "text-sm font-medium",
             nav: "space-x-1 flex items-center",
             nav_button: cn(
-              "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 rounded-md border border-input",
+              "size-7 rounded-md border border-input bg-transparent p-0 opacity-50 hover:opacity-100",
             ),
             nav_button_previous: "absolute left-1",
             nav_button_next: "absolute right-1",
@@ -132,7 +132,7 @@ export function DatePicker({ date, setDate }: DatePickerProps) {
             row: "flex w-full mt-2",
             cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
             day: cn(
-              "h-9 w-9 p-0 font-normal aria-selected:opacity-100 hover:bg-accent rounded-md",
+              "size-9 rounded-md p-0 font-normal hover:bg-accent aria-selected:opacity-100",
             ),
             day_selected:
               "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
@@ -144,8 +144,8 @@ export function DatePicker({ date, setDate }: DatePickerProps) {
             day_hidden: "invisible",
           }}
           components={{
-            IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
-            IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
+            IconLeft: ({ ...props }) => <ChevronLeft className="size-4" />,
+            IconRight: ({ ...props }) => <ChevronRight className="size-4" />,
           }}
         />
       </PopoverContent>

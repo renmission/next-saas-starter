@@ -253,7 +253,7 @@ export function TrustForm({
             <Button type="submit" disabled={isSubmitting || !isStepValid()}>
               {isSubmitting ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className="mr-2 size-4 animate-spin" />
                   Submitting...
                 </>
               ) : currentStep === steps.length - 1 ? (
@@ -261,7 +261,7 @@ export function TrustForm({
               ) : (
                 <>
                   Next
-                  <ChevronRight className="ml-2 h-4 w-4" />
+                  <ChevronRight className="ml-2 size-4" />
                 </>
               )}
             </Button>

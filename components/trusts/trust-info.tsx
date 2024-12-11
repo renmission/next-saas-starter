@@ -41,21 +41,21 @@ export function TrustInfoDisplay({ trust }: TrustInfoDisplayProps) {
             <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2 print:grid-cols-3">
               <div>
                 <dt className="font-medium text-gray-500">
-                  <Icons.calendar className="mr-2 inline-block h-4 w-4 print:hidden" />
+                  <Icons.calendar className="mr-2 inline-block size-4 print:hidden" />
                   Created At
                 </dt>
                 <dd className="mt-1">{formatDate(trust.createdAt)}</dd>
               </div>
               <div>
                 <dt className="font-medium text-gray-500">
-                  <Icons.clock className="mr-2 inline-block h-4 w-4 print:hidden" />
+                  <Icons.clock className="mr-2 inline-block size-4 print:hidden" />
                   Updated At
                 </dt>
                 <dd className="mt-1">{formatDate(trust.updatedAt)}</dd>
               </div>
               <div>
                 <dt className="font-medium text-gray-500">
-                  <Icons.user className="mr-2 inline-block h-4 w-4 print:hidden" />
+                  <Icons.user className="mr-2 inline-block size-4 print:hidden" />
                   Created By
                 </dt>
                 <dd className="mt-1">
@@ -68,7 +68,7 @@ export function TrustInfoDisplay({ trust }: TrustInfoDisplayProps) {
 
               <div className="print:hidden">
                 <dt className="font-medium text-gray-500">
-                  <Icons.user className="mr-2 inline-block h-4 w-4 print:hidden" />
+                  <Icons.user className="mr-2 inline-block size-4 print:hidden" />
                   Status
                 </dt>
                 <dd className="mt-1">

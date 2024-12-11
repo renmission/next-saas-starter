@@ -67,8 +67,8 @@ function DeleteClientModal({
       showModal={showDeleteClientModal}
       setShowModal={setShowDeleteClientModal}
     >
-      <div className="flex flex-col items-center justify-center space-y-3 border-b px-4 py-4 pt-8 sm:px-16">
-        <Icons.warning className="h-10 w-10 text-red-500" />
+      <div className="flex flex-col items-center justify-center space-y-3 border-b p-4 pt-8 sm:px-16">
+        <Icons.warning className="size-10 text-red-500" />
         <h3 className="text-lg font-medium">Delete Client</h3>
         <p className="text-center text-sm text-gray-500">
           This action is irreversible. Are you sure you want to delete the
@@ -119,12 +119,12 @@ function DeleteClientModal({
         >
           {deleting ? (
             <>
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="mr-2 size-4 animate-spin" />
               Deleting...
             </>
           ) : (
             <>
-              <Icons.trash className="mr-2 h-4 w-4" />
+              <Icons.trash className="mr-2 size-4" />
               Delete Client
             </>
           )}
