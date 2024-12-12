@@ -13,7 +13,7 @@ export const siteConfig: SiteConfig = {
     twitter: "https://twitter.com/trustnv",
     github: "",
   },
-  mailSupport: "support@saas-starter.com",
+  mailSupport: "support@trustnv.com",
 };
 
 export const footerLinks: SidebarNavItem[] = [
