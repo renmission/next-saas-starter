@@ -229,6 +229,7 @@ model User {
   formResponses FormResponse[] @relation("FormRespondent")
 
   isActive Boolean @default(true)
+  isArchived Boolean @default(false)
 
   clientInvitations ClientInvitation[]
 
