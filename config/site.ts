@@ -8,7 +8,7 @@ export const siteConfig: SiteConfig = {
   description:
     "Streamlines the process, allowing professionals to manage client needs effortlessly and efficiently.",
   url: site_url,
-  ogImage: `${site_url}/_static/og.jpg`,
+  ogImage: `${site_url}/_static/og.png`,
   links: {
     twitter: "https://twitter.com/trustnv",
     github: "",

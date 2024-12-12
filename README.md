@@ -1,5 +1,5 @@
 <a href="https://next-saas-stripe-starter.vercel.app">
-  <img alt="SaaS Starter" src="public/_static/og.jpg">
+  <img alt="SaaS Starter" src="public/_static/og.png">
   <h1 align="center">Next SaaS Stripe Starter</h1>
 </a>
 
@@ -66,6 +66,7 @@ pnpm run dev
 > Use this command for update your project: `ncu -i --format group`
 
 ## Roadmap
+
 - [ ] Upgrade eslint to v9
 - [ ] Add resend for success subscriptions
 
