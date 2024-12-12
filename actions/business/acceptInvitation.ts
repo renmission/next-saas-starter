@@ -31,11 +31,13 @@ export async function acceptClientInvitation({
       update: {
         name,
         role: UserRole.CLIENT,
+        businessId: invitation.businessId,
       },
       create: {
         email,
         name,
         role: UserRole.CLIENT,
+        businessId: invitation.businessId,
       },
     });
 
