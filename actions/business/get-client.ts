@@ -2,9 +2,23 @@
 
 import { prisma } from "@/lib/db";
 
-export async function getBusinessClientById(id: string) {
+export async function getBusinessById(id: string) {
   try {
-    const clients = await prisma.business.findUnique({ where: { id } });
+    const clients = await prisma.business.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        priority: true,
+        status: true,
+        createdAt: true,
+        updatedAt: true,
+        ownerId: true,
+        owner: true,
+        clients: true,
+        trusts: true,
+      },
+    });
 
     return clients;
   } catch (error) {

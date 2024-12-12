@@ -93,7 +93,7 @@ model Business {
   owner     User     @relation("OwnedBusinesses", fields: [ownerId], references: [id])
 
   trusts   Trust[]
-  clients    User[]
+  clients    User[]  @relation("BusinessClients")
   forms      Form[]
 
   trustPayments TrustPayment[]
@@ -207,8 +207,12 @@ model User {
   trustPayments TrustPayment[]
 
 
+  // businessId    String?
+  // business      Business? @relation(fields: [businessId], references: [id])
+
   businessId    String?
-  business      Business? @relation(fields: [businessId], references: [id])
+  business      Business? @relation("BusinessClients", fields: [businessId], references: [id])
+
 
   ownedBusinesses Business[] @relation("OwnedBusinesses")
 

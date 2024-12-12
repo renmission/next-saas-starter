@@ -13,7 +13,7 @@ export function InviteClientButton({ businessId }: { businessId: string }) {
     <>
       <Button onClick={() => setShowInviteClientModal(true)}>
         <Icons.send className="mr-2 size-4" />
-        Invite a client
+        Invite client
       </Button>
       <InviteClientModal />
     </>

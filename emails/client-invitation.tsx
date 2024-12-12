@@ -24,10 +24,10 @@ type ClientInvitationEmailProps = {
 const logoUrl = "https://placehold.co/150x50?text=TrustNV";
 
 export default function ClientInvitationEmail({
-  inviterName = "John Doe",
+  inviterName = "Ren Mission",
   businessName = "Trust NV",
-  clientName = "Ren",
-  invitationUrl = "https://localhost:3000/register",
+  clientName = "Margie",
+  invitationUrl = "https://localhost:3000/invite/client/c214349fa5ea00d4a50003fcaa2a1f1b3e94daa0",
 }: ClientInvitationEmailProps) {
   const currentYear = new Date().getFullYear();
   return (

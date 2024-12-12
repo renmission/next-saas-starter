@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { getBusinessClientById } from "@/actions/business/get-client";
+import { getBusinessById } from "@/actions/business/get-client";
 
 import { getCurrentUser } from "@/lib/session";
 import { ClientInfo } from "@/components/business/client-info";
@@ -18,11 +18,12 @@ export default async function ClientPage({
 
   if (!user?.id) redirect("/login");
 
-  const client = await getBusinessClientById(params.businessId);
+  const business = await getBusinessById(params.businessId);
 
-  if (!client) redirect("/dashboard/business/clients");
+  if (!business) redirect("/dashboard/business/clients");
 
-  const isUserClientID = user.role === "CLIENT" ? user.id : client.ownerId;
+  const isUserClientID = user.role === "CLIENT" ? user.id : business.ownerId;
+  const hasClients = business.clients && business.clients.length > 0;
 
   return (
     <>
@@ -32,17 +33,20 @@ export default async function ClientPage({
           text="Manage your client"
         />
         <div className="flex items-center gap-4">
-          <AddTrustButton
-            businessId={params.businessId}
-            clientId={isUserClientID}
-          />
-          <InviteClientButton businessId={params.businessId} />
+          {hasClients ? (
+            <AddTrustButton
+              businessId={params.businessId}
+              clientId={isUserClientID}
+            />
+          ) : (
+            <InviteClientButton businessId={params.businessId} />
+          )}
         </div>
       </div>
 
-      <ClientInfo client={client} />
+      <ClientInfo client={business} />
 
-      <Trusts client={client.id} />
+      <Trusts client={business.id} />
     </>
   );
 }
