@@ -25,6 +25,8 @@ export async function getTrustById(id: string) {
         createdAt: true,
         updatedAt: true,
         businessId: true,
+        isCreatedByClient: true,
+        client: true,
         professional: {
           select: {
             name: true,

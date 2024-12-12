@@ -142,12 +142,10 @@ export async function TrustCard({
             className="disabled w-full cursor-not-allowed sm:w-auto"
             disabled
           >
-            <Link href="#" className="flex w-full items-center justify-center">
-              <>
-                <Icons.clock className="mr-2 size-4 text-blue-700" />
-                Waiting for client to answer
-              </>
-            </Link>
+            <div className="flex w-full cursor-not-allowed items-center justify-center">
+              <Icons.clock className="mr-2 size-4 text-blue-700" />
+              Waiting for client to answer
+            </div>
           </Button>
         )}
       </CardFooter>

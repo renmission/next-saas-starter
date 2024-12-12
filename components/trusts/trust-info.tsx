@@ -59,7 +59,10 @@ export function TrustInfoDisplay({ trust }: TrustInfoDisplayProps) {
                   Created By
                 </dt>
                 <dd className="mt-1">
-                  {trust.professional.name} <br />
+                  {trust.isCreatedByClient
+                    ? trust.client.name
+                    : trust.professional.name}{" "}
+                  <br />
                   <span className="text-sm text-gray-500">
                     {trust.professional.email}
                   </span>
